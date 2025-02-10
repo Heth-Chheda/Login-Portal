@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container my-5">
+        <h2 class="text-center mb-4">@ViewData["Title"]</h2>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="userId" class="form-label">Enter User ID:</label>
+                    <input type="number" id="userId" name="userId" class="form-control" placeholder="Enter a valid User ID" />
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary" onclick="fetchUser()">Fetch User</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="userDetails" class="mt-4">
+            <!-- User details will be displayed here -->
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Include the external JavaScript file -->
+    <script src="~/js/FetchUserById.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+[
+  {
+    "Name": "New Profile (1)",
+    "Projects": [
+      {
+        "Path": "LoginPortal\\LoginPortal.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "LoginPortalApp\\LoginPortalApp.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      }
+    ]
+  }
+]

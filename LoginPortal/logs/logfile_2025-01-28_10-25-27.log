@@ -1,0 +1,4 @@
+2025-01-28 10:25:27.5716 | Info | Application started. Press Ctrl+C to shut down. 
+2025-01-28 10:25:27.5927 | Info | Hosting environment: Development 
+2025-01-28 10:25:27.6665 | Info | Content root path: D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal 
+2025-01-28 10:25:27.9546 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.html - - - 

@@ -1,0 +1,55 @@
+services:
+  loginportalapp:
+    build:
+      context: .
+      dockerfile: LoginPortalApp/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - sqlserver
+      - loginportal
+    networks:
+      - login-portal-networks
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - API_URL=http://host.docker.internal:8080
+      - ConnectionStrings__DefaultConnection=Server=host.docker.internal,1433;Database=user_management_db;User Id=admin;Password=admin123;TrustServerCertificate=True
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver-container
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=admin123
+    ports:
+      - "1433:1433"
+    networks:
+      - login-portal-networks
+    volumes:
+      - sql_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "admin123", "-Q", "SELECT 1"]
+      interval: 20s
+      timeout: 10s
+      retries: 10
+
+  loginportal:
+    build:
+      context: ./LoginPortal
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - sqlserver
+    networks:
+      - login-portal-networks
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=user_management_db;User Id=admin;Password=admin123;TrustServerCertificate=True
+
+networks:
+  login-portal-networks:
+    driver: bridge
+
+volumes:
+  sql_data:

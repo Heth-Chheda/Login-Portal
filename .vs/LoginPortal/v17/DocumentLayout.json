@@ -1,0 +1,122 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\COMP\\Desktop\\Heth\\Office\\MicroService\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{BDD3A02C-9D28-4C8D-9445-10D141B1584C}|LoginPortalApp\\LoginPortalApp.csproj|d:\\comp\\desktop\\heth\\office\\microservice\\loginportalapp\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BDD3A02C-9D28-4C8D-9445-10D141B1584C}|LoginPortalApp\\LoginPortalApp.csproj|solutionrelative:loginportalapp\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BDD3A02C-9D28-4C8D-9445-10D141B1584C}|LoginPortalApp\\LoginPortalApp.csproj|d:\\comp\\desktop\\heth\\office\\microservice\\loginportalapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BDD3A02C-9D28-4C8D-9445-10D141B1584C}|LoginPortalApp\\LoginPortalApp.csproj|solutionrelative:loginportalapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BDD3A02C-9D28-4C8D-9445-10D141B1584C}|LoginPortalApp\\LoginPortalApp.csproj|d:\\comp\\desktop\\heth\\office\\microservice\\loginportalapp\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{BDD3A02C-9D28-4C8D-9445-10D141B1584C}|LoginPortalApp\\LoginPortalApp.csproj|solutionrelative:loginportalapp\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7B7530E5-0998-42DB-8DF1-F8F98FEB69D1}|LoginPortal\\LoginPortal.csproj|d:\\comp\\desktop\\heth\\office\\microservice\\loginportal\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{7B7530E5-0998-42DB-8DF1-F8F98FEB69D1}|LoginPortal\\LoginPortal.csproj|solutionrelative:loginportal\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7B7530E5-0998-42DB-8DF1-F8F98FEB69D1}|LoginPortal\\LoginPortal.csproj|d:\\comp\\desktop\\heth\\office\\microservice\\loginportal\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B7530E5-0998-42DB-8DF1-F8F98FEB69D1}|LoginPortal\\LoginPortal.csproj|solutionrelative:loginportal\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BDD3A02C-9D28-4C8D-9445-10D141B1584C}|LoginPortalApp\\LoginPortalApp.csproj|d:\\comp\\desktop\\heth\\office\\microservice\\loginportalapp\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{BDD3A02C-9D28-4C8D-9445-10D141B1584C}|LoginPortalApp\\LoginPortalApp.csproj|solutionrelative:loginportalapp\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "D:\\COMP\\Desktop\\Heth\\Office\\MicroService\\LoginPortalApp\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "LoginPortalApp\\Services\\UserService.cs",
+              "ToolTip": "D:\\COMP\\Desktop\\Heth\\Office\\MicroService\\LoginPortalApp\\Services\\UserService.cs",
+              "RelativeToolTip": "LoginPortalApp\\Services\\UserService.cs",
+              "ViewState": "AgIAADsAAAAAAAAAAAAWwEUAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-31T13:13:41.648Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Dockerfile",
+              "DocumentMoniker": "D:\\COMP\\Desktop\\Heth\\Office\\MicroService\\LoginPortalApp\\Dockerfile",
+              "RelativeDocumentMoniker": "LoginPortalApp\\Dockerfile",
+              "ToolTip": "D:\\COMP\\Desktop\\Heth\\Office\\MicroService\\LoginPortalApp\\Dockerfile",
+              "RelativeToolTip": "LoginPortalApp\\Dockerfile",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAiwBIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-01-31T13:15:33.224Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\COMP\\Desktop\\Heth\\Office\\MicroService\\LoginPortalApp\\Program.cs",
+              "RelativeDocumentMoniker": "LoginPortalApp\\Program.cs",
+              "ToolTip": "D:\\COMP\\Desktop\\Heth\\Office\\MicroService\\LoginPortalApp\\Program.cs",
+              "RelativeToolTip": "LoginPortalApp\\Program.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAAACAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-31T13:05:24.552Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\COMP\\Desktop\\Heth\\Office\\MicroService\\LoginPortal\\Program.cs",
+              "RelativeDocumentMoniker": "LoginPortal\\Program.cs",
+              "ToolTip": "D:\\COMP\\Desktop\\Heth\\Office\\MicroService\\LoginPortal\\Program.cs",
+              "RelativeToolTip": "LoginPortal\\Program.cs",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAcwFcAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-31T12:50:08.621Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Dockerfile",
+              "DocumentMoniker": "D:\\COMP\\Desktop\\Heth\\Office\\MicroService\\LoginPortal\\Dockerfile",
+              "RelativeDocumentMoniker": "LoginPortal\\Dockerfile",
+              "ToolTip": "D:\\COMP\\Desktop\\Heth\\Office\\MicroService\\LoginPortal\\Dockerfile",
+              "RelativeToolTip": "LoginPortal\\Dockerfile",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAiwCEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-01-31T12:49:59.835Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "D:\\COMP\\Desktop\\Heth\\Office\\MicroService\\LoginPortalApp\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "LoginPortalApp\\Properties\\launchSettings.json",
+              "ToolTip": "D:\\COMP\\Desktop\\Heth\\Office\\MicroService\\LoginPortalApp\\Properties\\launchSettings.json",
+              "RelativeToolTip": "LoginPortalApp\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-01-31T12:48:15.606Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
