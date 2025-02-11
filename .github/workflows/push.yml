@@ -1,0 +1,45 @@
+name: Push Branch
+
+on:
+  push:
+    branches:
+      - "**"
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
+jobs:
+  BuildAndTestLoginPortal:
+    env:
+      SOLUTION: 'LoginPortal.sln'
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore $SOLUTION
+
+    - name: Build Solution
+      run: dotnet build $SOLUTION --no-restore
+
+    - name: Run Unit Tests
+      run: dotnet test $SOLUTION --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" 
+
+    - name: Test Report
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: .NET Tests
+        path: "**/test-results.trx"
+        reporter: dotnet-trx
+        fail-on-error: true
