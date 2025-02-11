@@ -1,0 +1,5 @@
+2025-01-28 10:26:04.1311 | Info | Login successful for user admin@example.com. 
+2025-01-28 10:26:04.1477 | Info | Executing OkObjectResult, writing value of type 'LoginPortal.Models.LoginResponse'. 
+2025-01-28 10:26:04.1689 | Info | Executed action LoginPortal.Controllers.AuthController.Login (LoginPortal) in 8457.1752ms 
+2025-01-28 10:26:04.1689 | Info | Executed endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-28 10:26:04.1873 | Info | Request finished HTTP/2 POST https://localhost:7185/api/Auth/login - 200 - application/json;+charset=utf-8 8573.9784ms 

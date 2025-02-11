@@ -1,0 +1,6 @@
+2025-01-28 10:25:28.5933 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.html - 200 - text/html;charset=utf-8 632.3061ms 
+2025-01-28 10:25:28.6088 | Info | Request starting HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - - - 
+2025-01-28 10:25:28.6088 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.js - - - 
+2025-01-28 10:25:28.6595 | Info | Request starting HTTP/2 GET https://localhost:7185/_vs/browserLink - - - 
+2025-01-28 10:25:28.6719 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.js - 200 - application/javascript;charset=utf-8 62.7259ms 
+2025-01-28 10:25:28.6885 | Info | Request finished HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - 200 13774 application/javascript;+charset=utf-8 79.8371ms 

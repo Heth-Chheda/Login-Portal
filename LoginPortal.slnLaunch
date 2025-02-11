@@ -1,0 +1,17 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "LoginPortalApp\\LoginPortalApp.csproj",
+        "Action": "Start",
+        "DebugTarget": "Container (Dockerfile)"
+      },
+      {
+        "Path": "LoginPortal\\LoginPortal.csproj",
+        "Action": "Start",
+        "DebugTarget": "Container (Dockerfile)"
+      }
+    ]
+  }
+]

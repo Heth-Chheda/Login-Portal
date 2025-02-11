@@ -1,0 +1,4 @@
+2025-01-28 10:26:03.9600 | Info | Executed DbCommand (196ms) [Parameters=[@__email_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[user_id], [u].[address], [u].[created_at], [u].[date_of_birth], [u].[email], [u].[first_name], [u].[hashed_password], [u].[is_verified], [u].[last_name], [u].[phone_number], [u].[profile_picture_url], [u].[role], [u].[updated_at]
+FROM [userDetails] AS [u]
+WHERE [u].[email] = @__email_0 

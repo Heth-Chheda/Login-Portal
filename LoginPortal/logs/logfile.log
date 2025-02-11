@@ -1,0 +1,640 @@
+2025-01-28 10:27:55.8889 | Info | Application Starting... 
+2025-01-28 10:27:58.1792 | Info | User profile is available. Using 'C:\Users\COMP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-01-28 10:27:58.7181 | Info | Now listening on: https://localhost:7185 
+2025-01-28 10:27:58.7181 | Info | Now listening on: http://localhost:5002 
+2025-01-28 10:27:59.6238 | Info | Application started. Press Ctrl+C to shut down. 
+2025-01-28 10:27:59.6238 | Info | Hosting environment: Development 
+2025-01-28 10:27:59.6238 | Info | Content root path: D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal 
+2025-01-28 10:27:59.6293 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.html - - - 
+2025-01-28 10:28:00.1557 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.html - 200 - text/html;charset=utf-8 522.3282ms 
+2025-01-28 10:28:00.1887 | Info | Request starting HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - - - 
+2025-01-28 10:28:00.1887 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.js - - - 
+2025-01-28 10:28:00.1991 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.js - 200 - application/javascript;charset=utf-8 9.7520ms 
+2025-01-28 10:28:00.2228 | Info | Request finished HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - 200 13774 application/javascript;+charset=utf-8 34.2358ms 
+2025-01-28 10:28:00.2686 | Info | Request starting HTTP/2 GET https://localhost:7185/_vs/browserLink - - - 
+2025-01-28 10:28:00.4043 | Info | Request finished HTTP/2 GET https://localhost:7185/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 135.7456ms 
+2025-01-28 10:28:00.5379 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - - - 
+2025-01-28 10:28:00.6691 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 131.1101ms 
+2025-01-28 10:28:14.0890 | Info | Request starting HTTP/2 GET https://localhost:7185/api/User_Details/1 - - - 
+2025-01-28 10:28:14.1241 | Info | Executing endpoint 'LoginPortal.Controllers.User_DetailsController.GetUserDetails (LoginPortal)' 
+2025-01-28 10:28:14.1764 | Info | Route matched with {action = "GetUserDetails", controller = "User_Details"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[LoginPortal.Models.GetUserDetailsByIdResponse]] GetUserDetails(Int32) on controller LoginPortal.Controllers.User_DetailsController (LoginPortal). 
+2025-01-28 10:28:14.4755 | Info | Fetching user details for User ID: 1 
+2025-01-28 10:28:17.1295 | Info | Executed DbCommand (79ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[user_id], [u].[address], [u].[created_at], [u].[date_of_birth], [u].[email], [u].[first_name], [u].[hashed_password], [u].[is_verified], [u].[last_name], [u].[phone_number], [u].[profile_picture_url], [u].[role], [u].[updated_at]
+FROM [userDetails] AS [u]
+WHERE [u].[user_id] = @__p_0 
+2025-01-28 10:28:17.3178 | Info | Successfully fetched user details for User ID: 1 
+2025-01-28 10:28:17.3400 | Info | Executing OkObjectResult, writing value of type 'LoginPortal.Models.GetUserDetailsByIdResponse'. 
+2025-01-28 10:28:17.3978 | Info | Executed action LoginPortal.Controllers.User_DetailsController.GetUserDetails (LoginPortal) in 3209.3754ms 
+2025-01-28 10:28:17.3978 | Info | Executed endpoint 'LoginPortal.Controllers.User_DetailsController.GetUserDetails (LoginPortal)' 
+2025-01-28 10:28:17.4197 | Info | Request finished HTTP/2 GET https://localhost:7185/api/User_Details/1 - 200 - application/json;+charset=utf-8 3330.8153ms 
+2025-01-28 15:25:21.6620 | Info | Register endpoint hit. 
+2025-01-28 15:25:21.7071 | Warn | Registration failed. Email test@example.com is already taken. 
+2025-01-28 15:25:21.7314 | Info | Register endpoint hit. 
+2025-01-28 15:25:21.7422 | Info | User with ID 0 registered successfully. 
+2025-01-28 15:25:21.7422 | Info | Login endpoint hit. 
+2025-01-28 15:25:21.7422 | Warn | Login failed. Email invalid@example.com not found. 
+2025-01-28 15:38:57.9017 | Info | Login endpoint hit. 
+2025-01-28 15:38:57.9388 | Warn | Login failed. Incorrect password for email test@example.com. 
+2025-01-28 15:38:57.9758 | Info | Login endpoint hit. 
+2025-01-28 15:38:57.9758 | Info | Login successful for user test@example.com. 
+2025-01-28 15:38:57.9758 | Info | Register endpoint hit. 
+2025-01-28 15:38:57.9758 | Warn | Registration failed. Email test@example.com is already taken. 
+2025-01-28 15:38:57.9918 | Info | Register endpoint hit. 
+2025-01-28 15:38:57.9918 | Info | User with ID 0 registered successfully. 
+2025-01-28 15:38:57.9918 | Info | Login endpoint hit. 
+2025-01-28 15:38:57.9918 | Warn | Login failed. Email invalid@example.com not found. 
+2025-01-28 15:41:59.2554 | Info | Password reset initiated for email test@example.com. 
+2025-01-28 15:41:59.2823 | Warn | Password reset failed for email test@example.com. Invalid token. 
+2025-01-28 15:41:59.3182 | Info | Password reset link requested for email test@example.com. 
+2025-01-28 15:41:59.3612 | Error | An error occurred while requesting password reset for email test@example.com. System.NullReferenceException: Object reference not set to an instance of an object.
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityType()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.CheckState()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityQueryable()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.System.Linq.IQueryable.get_Provider()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ExecuteAsync[TSource,TResult](MethodInfo operatorMethodInfo, IQueryable`1 source, Expression expression, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ExecuteAsync[TSource,TResult](MethodInfo operatorMethodInfo, IQueryable`1 source, LambdaExpression expression, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate, CancellationToken cancellationToken)
+   at LoginPortal.Services.UserService.GetUserByEmailAsync(String email) in D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal\Services\UserService.cs:line 54
+   at LoginPortal.Controllers.UserController.RequestPasswordReset(PasswordResetRequest request) in D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal\Controllers\AuthControlller.cs:line 143
+2025-01-28 15:43:00.0167 | Info | Password reset initiated for email test@example.com. 
+2025-01-28 15:43:00.0456 | Warn | Password reset failed for email test@example.com. Invalid token. 
+2025-01-28 15:43:00.0702 | Info | Password reset link requested for email test@example.com. 
+2025-01-28 15:43:00.1023 | Error | An error occurred while requesting password reset for email test@example.com. System.NullReferenceException: Object reference not set to an instance of an object.
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityType()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.CheckState()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityQueryable()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.System.Linq.IQueryable.get_Provider()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ExecuteAsync[TSource,TResult](MethodInfo operatorMethodInfo, IQueryable`1 source, Expression expression, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ExecuteAsync[TSource,TResult](MethodInfo operatorMethodInfo, IQueryable`1 source, LambdaExpression expression, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate, CancellationToken cancellationToken)
+   at LoginPortal.Services.UserService.GetUserByEmailAsync(String email) in D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal\Services\UserService.cs:line 54
+   at LoginPortal.Controllers.UserController.RequestPasswordReset(PasswordResetRequest request) in D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal\Controllers\AuthControlller.cs:line 143
+2025-01-28 15:43:34.7900 | Info | Password reset initiated for email test@example.com. 
+2025-01-28 15:43:34.8270 | Warn | Password reset failed for email test@example.com. Invalid token. 
+2025-01-28 15:43:34.8575 | Info | Password reset link requested for email admin@example.com. 
+2025-01-28 15:43:34.8938 | Error | An error occurred while requesting password reset for email admin@example.com. System.NullReferenceException: Object reference not set to an instance of an object.
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityType()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.CheckState()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityQueryable()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.System.Linq.IQueryable.get_Provider()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ExecuteAsync[TSource,TResult](MethodInfo operatorMethodInfo, IQueryable`1 source, Expression expression, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ExecuteAsync[TSource,TResult](MethodInfo operatorMethodInfo, IQueryable`1 source, LambdaExpression expression, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate, CancellationToken cancellationToken)
+   at LoginPortal.Services.UserService.GetUserByEmailAsync(String email) in D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal\Services\UserService.cs:line 54
+   at LoginPortal.Controllers.UserController.RequestPasswordReset(PasswordResetRequest request) in D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal\Controllers\AuthControlller.cs:line 143
+2025-01-28 15:48:36.0321 | Info | Password reset link requested for email test@example.com. 
+2025-01-28 15:48:36.0321 | Info | Password reset initiated for email test@example.com. 
+2025-01-28 15:48:36.0594 | Warn | Password reset failed for email test@example.com. Invalid token. 
+2025-01-28 15:48:36.1032 | Warn | An error occurred while requesting password reset for email test@example.com. System.NullReferenceException: Object reference not set to an instance of an object.
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityType()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.CheckState()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityQueryable()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.System.Linq.IQueryable.get_Provider()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ExecuteAsync[TSource,TResult](MethodInfo operatorMethodInfo, IQueryable`1 source, Expression expression, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ExecuteAsync[TSource,TResult](MethodInfo operatorMethodInfo, IQueryable`1 source, LambdaExpression expression, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate, CancellationToken cancellationToken)
+   at LoginPortal.Services.UserService.GetUserByEmailAsync(String email) in D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal\Services\UserService.cs:line 54
+   at LoginPortal.Controllers.UserController.RequestPasswordReset(PasswordResetRequest request) in D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal\Controllers\AuthControlller.cs:line 146
+2025-01-28 15:50:50.5732 | Info | Password reset link requested for email test@example.com. 
+2025-01-28 15:50:50.5732 | Info | Password reset initiated for email test@example.com. 
+2025-01-28 15:50:50.6003 | Warn | Password reset failed for email test@example.com. Invalid token. 
+2025-01-28 15:50:50.6390 | Warn | An error occurred while requesting password reset for email test@example.com. System.NullReferenceException: Object reference not set to an instance of an object.
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityType()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.CheckState()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityQueryable()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.System.Linq.IQueryable.get_Provider()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ExecuteAsync[TSource,TResult](MethodInfo operatorMethodInfo, IQueryable`1 source, Expression expression, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ExecuteAsync[TSource,TResult](MethodInfo operatorMethodInfo, IQueryable`1 source, LambdaExpression expression, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate, CancellationToken cancellationToken)
+   at LoginPortal.Services.UserService.GetUserByEmailAsync(String email) in D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal\Services\UserService.cs:line 54
+   at LoginPortal.Controllers.UserController.RequestPasswordReset(PasswordResetRequest request) in D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal\Controllers\AuthControlller.cs:line 146
+2025-01-28 15:51:16.4135 | Info | Password reset link requested for email test@example.com. 
+2025-01-28 15:54:35.9742 | Info | Password reset link requested for email test@example.com. 
+2025-01-28 15:54:35.9742 | Info | Password reset initiated for email test@example.com. 
+2025-01-28 15:54:36.0039 | Warn | Password reset failed for email test@example.com. Invalid token. 
+2025-01-28 15:54:36.0391 | Warn | An error occurred while requesting password reset for email test@example.com. System.NullReferenceException: Object reference not set to an instance of an object.
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityType()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.CheckState()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityQueryable()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.System.Linq.IQueryable.get_Provider()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ExecuteAsync[TSource,TResult](MethodInfo operatorMethodInfo, IQueryable`1 source, Expression expression, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ExecuteAsync[TSource,TResult](MethodInfo operatorMethodInfo, IQueryable`1 source, LambdaExpression expression, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate, CancellationToken cancellationToken)
+   at LoginPortal.Services.UserService.GetUserByEmailAsync(String email) in D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal\Services\UserService.cs:line 54
+   at LoginPortal.Controllers.UserController.RequestPasswordReset(PasswordResetRequest request) in D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal\Controllers\AuthControlller.cs:line 146
+2025-01-28 16:00:22.8344 | Info | Password reset initiated for email test@example.com. 
+2025-01-28 16:00:22.8656 | Warn | Password reset failed for email test@example.com. Invalid token. 
+2025-01-28 16:01:26.7331 | Info | Application Starting... 
+2025-01-28 16:01:28.1142 | Error | An error occurred during application startup. System.ArgumentException: Cannot instantiate implementation type 'LoginPortal.Services.IPasswordService' for service type 'LoginPortal.Services.IPasswordService'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.Populate()
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(IServiceCollection services, ServiceProviderOptions options)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal\Program.cs:line 57
+2025-01-28 16:02:51.1035 | Info | Application Starting... 
+2025-01-28 16:02:53.2315 | Error | An error occurred during application startup. System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: LoginPortal.Services.TokenService Lifetime: Scoped ImplementationType: LoginPortal.Services.TokenService': Unable to resolve service for type 'LoginPortal.Services.UserService' while attempting to activate 'LoginPortal.Services.TokenService'.
+ ---> System.InvalidOperationException: Unable to resolve service for type 'LoginPortal.Services.UserService' while attempting to activate 'LoginPortal.Services.TokenService'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)
+2025-01-28 16:04:29.8113 | Info | Application Starting... 
+2025-01-28 16:04:30.6765 | Error | An error occurred during application startup. System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: LoginPortal.Services.TokenService Lifetime: Scoped ImplementationType: LoginPortal.Services.TokenService': Unable to resolve service for type 'LoginPortal.Services.UserService' while attempting to activate 'LoginPortal.Services.TokenService'.
+ ---> System.InvalidOperationException: Unable to resolve service for type 'LoginPortal.Services.UserService' while attempting to activate 'LoginPortal.Services.TokenService'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)
+2025-01-28 16:10:09.2398 | Info | Application Starting... 
+2025-01-28 16:10:13.1422 | Error | An error occurred during application startup. System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: LoginPortal.Services.TokenService Lifetime: Scoped ImplementationType: LoginPortal.Services.TokenService': Unable to resolve service for type 'LoginPortal.Services.UserService' while attempting to activate 'LoginPortal.Services.TokenService'.
+ ---> System.InvalidOperationException: Unable to resolve service for type 'LoginPortal.Services.UserService' while attempting to activate 'LoginPortal.Services.TokenService'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)
+2025-01-28 16:11:24.9305 | Info | Application Starting... 
+2025-01-28 16:11:26.7533 | Info | User profile is available. Using 'C:\Users\COMP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-01-28 16:11:28.4236 | Info | Now listening on: https://localhost:7185 
+2025-01-28 16:11:28.4236 | Info | Now listening on: http://localhost:5002 
+2025-01-28 16:11:28.9604 | Info | Application started. Press Ctrl+C to shut down. 
+2025-01-28 16:11:28.9604 | Info | Hosting environment: Development 
+2025-01-28 16:11:28.9604 | Info | Content root path: D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal 
+2025-01-28 16:11:32.8454 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.html - - - 
+2025-01-28 16:11:33.6272 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.html - 200 - text/html;charset=utf-8 797.5021ms 
+2025-01-28 16:11:33.8064 | Info | Request starting HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - - - 
+2025-01-28 16:11:33.8064 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.js - - - 
+2025-01-28 16:11:33.8220 | Info | Request starting HTTP/2 GET https://localhost:7185/_vs/browserLink - - - 
+2025-01-28 16:11:33.8373 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.js - 200 - application/javascript;charset=utf-8 22.3250ms 
+2025-01-28 16:11:33.8373 | Info | Request finished HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - 200 13774 application/javascript;+charset=utf-8 38.7047ms 
+2025-01-28 16:11:34.0499 | Info | Request finished HTTP/2 GET https://localhost:7185/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 228.0536ms 
+2025-01-28 16:11:34.1734 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - - - 
+2025-01-28 16:11:34.2824 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 109.0085ms 
+2025-01-28 16:12:50.7464 | Info | Application Starting... 
+2025-01-28 16:12:52.6037 | Info | User profile is available. Using 'C:\Users\COMP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-01-28 16:12:53.4183 | Info | Now listening on: https://localhost:7185 
+2025-01-28 16:12:53.4183 | Info | Now listening on: http://localhost:5002 
+2025-01-28 16:12:53.7929 | Info | Application started. Press Ctrl+C to shut down. 
+2025-01-28 16:12:53.8070 | Info | Hosting environment: Development 
+2025-01-28 16:12:53.8185 | Info | Content root path: D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal 
+2025-01-28 16:12:55.1648 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.html - - - 
+2025-01-28 16:12:55.9217 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.html - 200 - text/html;charset=utf-8 759.6075ms 
+2025-01-28 16:12:55.9761 | Info | Request starting HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - - - 
+2025-01-28 16:12:55.9761 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.js - - - 
+2025-01-28 16:12:56.0279 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.js - 200 - application/javascript;charset=utf-8 45.6298ms 
+2025-01-28 16:12:56.0507 | Info | Request finished HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - 200 13774 application/javascript;+charset=utf-8 74.7782ms 
+2025-01-28 16:12:56.0657 | Info | Request starting HTTP/2 GET https://localhost:7185/_vs/browserLink - - - 
+2025-01-28 16:12:56.4247 | Info | Request finished HTTP/2 GET https://localhost:7185/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 359.0834ms 
+2025-01-28 16:12:56.5935 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - - - 
+2025-01-28 16:12:56.7009 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 107.3723ms 
+2025-01-28 16:28:59.9212 | Info | Application Starting... 
+2025-01-28 16:29:01.9088 | Info | User profile is available. Using 'C:\Users\COMP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-01-28 16:29:02.6437 | Info | Now listening on: https://localhost:7185 
+2025-01-28 16:29:02.6437 | Info | Now listening on: http://localhost:5002 
+2025-01-28 16:29:02.8743 | Info | Application started. Press Ctrl+C to shut down. 
+2025-01-28 16:29:02.9355 | Info | Hosting environment: Development 
+2025-01-28 16:29:02.9779 | Info | Content root path: D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal 
+2025-01-28 16:29:03.9171 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.html - - - 
+2025-01-28 16:29:05.0177 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.html - 200 - text/html;charset=utf-8 1099.7816ms 
+2025-01-28 16:29:05.0906 | Info | Request starting HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - - - 
+2025-01-28 16:29:05.1026 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.js - - - 
+2025-01-28 16:29:05.1026 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.js - 200 - application/javascript;charset=utf-8 5.5025ms 
+2025-01-28 16:29:05.2106 | Info | Request finished HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - 200 13774 application/javascript;+charset=utf-8 120.1108ms 
+2025-01-28 16:29:05.2424 | Info | Request starting HTTP/2 GET https://localhost:7185/_vs/browserLink - - - 
+2025-01-28 16:29:05.4077 | Info | Request finished HTTP/2 GET https://localhost:7185/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 165.3095ms 
+2025-01-28 16:29:05.5584 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - - - 
+2025-01-28 16:29:05.7574 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 199.3573ms 
+2025-01-28 16:37:32.4484 | Info | Application Starting... 
+2025-01-28 16:37:35.3807 | Info | User profile is available. Using 'C:\Users\COMP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-01-28 16:37:36.2377 | Info | Now listening on: https://localhost:7185 
+2025-01-28 16:37:36.2380 | Info | Now listening on: http://localhost:5002 
+2025-01-28 16:37:36.9467 | Info | Application started. Press Ctrl+C to shut down. 
+2025-01-28 16:37:36.9467 | Info | Hosting environment: Development 
+2025-01-28 16:37:36.9467 | Info | Content root path: D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal 
+2025-01-28 16:37:38.3387 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.html - - - 
+2025-01-28 16:37:39.0248 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.html - 200 - text/html;charset=utf-8 693.4942ms 
+2025-01-28 16:37:40.4802 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.js - - - 
+2025-01-28 16:37:40.4802 | Info | Request starting HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - - - 
+2025-01-28 16:37:40.4802 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.js - 200 - application/javascript;charset=utf-8 6.3866ms 
+2025-01-28 16:37:40.4991 | Info | Request finished HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - 200 13774 application/javascript;+charset=utf-8 19.1009ms 
+2025-01-28 16:37:40.6874 | Info | Request starting HTTP/2 GET https://localhost:7185/_vs/browserLink - - - 
+2025-01-28 16:37:40.7769 | Info | Request finished HTTP/2 GET https://localhost:7185/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 89.5070ms 
+2025-01-28 16:37:41.0225 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - - - 
+2025-01-28 16:37:41.0938 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 71.3678ms 
+2025-01-28 17:08:43.3407 | Info | Application Starting... 
+2025-01-28 17:08:46.0318 | Info | User profile is available. Using 'C:\Users\COMP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-01-28 17:08:46.7316 | Info | Now listening on: https://localhost:7185 
+2025-01-28 17:08:46.7316 | Info | Now listening on: http://localhost:5002 
+2025-01-28 17:08:47.0888 | Info | Application started. Press Ctrl+C to shut down. 
+2025-01-28 17:08:47.1016 | Info | Hosting environment: Development 
+2025-01-28 17:08:47.1016 | Info | Content root path: D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal 
+2025-01-28 17:08:47.9665 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.html - - - 
+2025-01-28 17:08:48.6881 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.html - 200 - text/html;charset=utf-8 729.9374ms 
+2025-01-28 17:08:49.0681 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.js - - - 
+2025-01-28 17:08:49.0681 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.js - 200 - application/javascript;charset=utf-8 5.0072ms 
+2025-01-28 17:08:49.1004 | Info | Request starting HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - - - 
+2025-01-28 17:08:49.1250 | Info | Request finished HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - 200 13774 application/javascript;+charset=utf-8 24.5190ms 
+2025-01-28 17:08:49.1339 | Info | Request starting HTTP/2 GET https://localhost:7185/_vs/browserLink - - - 
+2025-01-28 17:08:49.2190 | Info | Request finished HTTP/2 GET https://localhost:7185/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 85.1820ms 
+2025-01-28 17:08:50.5792 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - - - 
+2025-01-28 17:08:50.6543 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 75.1625ms 
+2025-01-28 17:08:58.8988 | Info | Request starting HTTP/1.1 POST https://localhost:7185/api/Auth/Login - application/json;+charset=utf-8 52 
+2025-01-28 17:08:58.9299 | Info | Executing endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-28 17:08:58.9683 | Info | Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LoginPortal.Models.LoginRequest) on controller LoginPortal.Controllers.AuthController (LoginPortal). 
+2025-01-28 17:09:00.4154 | Info | Login endpoint hit. 
+2025-01-28 17:09:04.6131 | Info | Executed DbCommand (208ms) [Parameters=[@__email_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[user_id], [u].[address], [u].[created_at], [u].[date_of_birth], [u].[email], [u].[first_name], [u].[hashed_password], [u].[is_verified], [u].[last_name], [u].[phone_number], [u].[profile_picture_url], [u].[role], [u].[updated_at]
+FROM [userDetails] AS [u]
+WHERE [u].[email] = @__email_0 
+2025-01-28 17:09:04.7788 | Info | Login successful for user admin@example.com. 
+2025-01-28 17:09:04.7969 | Info | Executing OkObjectResult, writing value of type 'LoginPortal.Models.LoginResponse'. 
+2025-01-28 17:09:04.8245 | Info | Executed action LoginPortal.Controllers.AuthController.Login (LoginPortal) in 5844.6842ms 
+2025-01-28 17:09:04.8245 | Info | Executed endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-28 17:09:04.8402 | Info | Request finished HTTP/1.1 POST https://localhost:7185/api/Auth/Login - 200 - application/json;+charset=utf-8 5941.9165ms 
+2025-01-28 17:45:25.6059 | Info | Application Starting... 
+2025-01-28 17:45:28.1618 | Info | User profile is available. Using 'C:\Users\COMP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-01-28 17:45:28.7797 | Info | Now listening on: https://localhost:7185 
+2025-01-28 17:45:28.7797 | Info | Now listening on: http://localhost:5002 
+2025-01-28 17:45:31.3812 | Info | Application started. Press Ctrl+C to shut down. 
+2025-01-28 17:45:31.6741 | Info | Hosting environment: Development 
+2025-01-28 17:45:31.7056 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.html - - - 
+2025-01-28 17:45:31.7145 | Info | Content root path: D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal 
+2025-01-28 17:45:34.1639 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.html - 200 - text/html;charset=utf-8 2471.8618ms 
+2025-01-28 17:45:34.3373 | Info | Request starting HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - - - 
+2025-01-28 17:45:34.3373 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.js - - - 
+2025-01-28 17:45:34.6825 | Info | Request starting HTTP/2 GET https://localhost:7185/_vs/browserLink - - - 
+2025-01-28 17:45:34.6825 | Info | Request finished HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - 200 13774 application/javascript;+charset=utf-8 348.8898ms 
+2025-01-28 17:45:34.7372 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.js - 200 - application/javascript;charset=utf-8 397.6483ms 
+2025-01-28 17:45:35.8479 | Info | Request finished HTTP/2 GET https://localhost:7185/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 1165.6400ms 
+2025-01-28 17:45:39.1082 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - - - 
+2025-01-28 17:45:39.1996 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 91.4417ms 
+2025-01-28 17:45:46.5699 | Info | Request starting HTTP/1.1 POST https://localhost:7185/api/Auth/Login - application/json;+charset=utf-8 52 
+2025-01-28 17:45:46.6290 | Info | Executing endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-28 17:45:46.6663 | Info | Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LoginPortal.Models.LoginRequest) on controller LoginPortal.Controllers.AuthController (LoginPortal). 
+2025-01-28 17:45:47.1324 | Info | Login endpoint hit. 
+2025-01-28 17:45:50.0846 | Info | Executed DbCommand (135ms) [Parameters=[@__email_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[user_id], [u].[address], [u].[created_at], [u].[date_of_birth], [u].[email], [u].[first_name], [u].[hashed_password], [u].[is_verified], [u].[last_name], [u].[phone_number], [u].[profile_picture_url], [u].[role], [u].[updated_at]
+FROM [userDetails] AS [u]
+WHERE [u].[email] = @__email_0 
+2025-01-28 17:45:50.3309 | Info | Login successful for user admin@example.com. 
+2025-01-28 17:45:50.3501 | Info | Executing OkObjectResult, writing value of type 'LoginPortal.Models.LoginResponse'. 
+2025-01-28 17:45:50.4127 | Info | Executed action LoginPortal.Controllers.AuthController.Login (LoginPortal) in 3704.0788ms 
+2025-01-28 17:45:50.4127 | Info | Executed endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-28 17:45:50.4566 | Info | Request finished HTTP/1.1 POST https://localhost:7185/api/Auth/Login - 200 - application/json;+charset=utf-8 3887.1827ms 
+2025-01-28 17:46:12.1481 | Info | Request starting HTTP/1.1 GET https://localhost:7185/api/User_Details/13 - - - 
+2025-01-28 17:46:12.1600 | Info | Executing endpoint 'LoginPortal.Controllers.User_DetailsController.GetUserDetails (LoginPortal)' 
+2025-01-28 17:46:12.1600 | Info | Route matched with {action = "GetUserDetails", controller = "User_Details"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[LoginPortal.Models.GetUserDetailsByIdResponse]] GetUserDetails(Int32) on controller LoginPortal.Controllers.User_DetailsController (LoginPortal). 
+2025-01-28 17:46:12.1841 | Info | Fetching user details for User ID: 13 
+2025-01-28 17:46:12.3118 | Info | Executed DbCommand (8ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[user_id], [u].[address], [u].[created_at], [u].[date_of_birth], [u].[email], [u].[first_name], [u].[hashed_password], [u].[is_verified], [u].[last_name], [u].[phone_number], [u].[profile_picture_url], [u].[role], [u].[updated_at]
+FROM [userDetails] AS [u]
+WHERE [u].[user_id] = @__p_0 
+2025-01-28 17:46:12.3118 | Info | Successfully fetched user details for User ID: 13 
+2025-01-28 17:46:12.3196 | Info | Executing OkObjectResult, writing value of type 'LoginPortal.Models.GetUserDetailsByIdResponse'. 
+2025-01-28 17:46:12.3330 | Info | Executed action LoginPortal.Controllers.User_DetailsController.GetUserDetails (LoginPortal) in 161.3915ms 
+2025-01-28 17:46:12.3330 | Info | Executed endpoint 'LoginPortal.Controllers.User_DetailsController.GetUserDetails (LoginPortal)' 
+2025-01-28 17:46:12.3330 | Info | Request finished HTTP/1.1 GET https://localhost:7185/api/User_Details/13 - 200 - application/json;+charset=utf-8 186.8863ms 
+2025-01-28 17:46:48.3221 | Info | Request starting HTTP/1.1 POST https://localhost:7185/api/Auth/Login - application/json;+charset=utf-8 58 
+2025-01-28 17:46:48.3395 | Info | Executing endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-28 17:46:48.3395 | Info | Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LoginPortal.Models.LoginRequest) on controller LoginPortal.Controllers.AuthController (LoginPortal). 
+2025-01-28 17:46:48.4171 | Info | Login endpoint hit. 
+2025-01-28 17:46:48.5746 | Info | Executed DbCommand (5ms) [Parameters=[@__email_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[user_id], [u].[address], [u].[created_at], [u].[date_of_birth], [u].[email], [u].[first_name], [u].[hashed_password], [u].[is_verified], [u].[last_name], [u].[phone_number], [u].[profile_picture_url], [u].[role], [u].[updated_at]
+FROM [userDetails] AS [u]
+WHERE [u].[email] = @__email_0 
+2025-01-28 17:46:48.5746 | Warn | Login failed. Incorrect password for email hethchheda2510@gmail.com. 
+2025-01-28 17:46:48.5746 | Info | Executing UnauthorizedObjectResult, writing value of type 'LoginPortal.Models.LoginResponse'. 
+2025-01-28 17:46:48.5746 | Info | Executed action LoginPortal.Controllers.AuthController.Login (LoginPortal) in 238.3972ms 
+2025-01-28 17:46:48.5746 | Info | Executed endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-28 17:46:48.5817 | Info | Request finished HTTP/1.1 POST https://localhost:7185/api/Auth/Login - 401 - application/json;+charset=utf-8 259.6472ms 
+2025-01-28 17:47:01.2037 | Info | Request starting HTTP/1.1 POST https://localhost:7185/api/Auth/Login - application/json;+charset=utf-8 51 
+2025-01-28 17:47:01.2037 | Info | Executing endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-28 17:47:01.2037 | Info | Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LoginPortal.Models.LoginRequest) on controller LoginPortal.Controllers.AuthController (LoginPortal). 
+2025-01-28 17:47:01.2327 | Info | Login endpoint hit. 
+2025-01-28 17:47:01.2327 | Info | Executed DbCommand (1ms) [Parameters=[@__email_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[user_id], [u].[address], [u].[created_at], [u].[date_of_birth], [u].[email], [u].[first_name], [u].[hashed_password], [u].[is_verified], [u].[last_name], [u].[phone_number], [u].[profile_picture_url], [u].[role], [u].[updated_at]
+FROM [userDetails] AS [u]
+WHERE [u].[email] = @__email_0 
+2025-01-28 17:47:01.2327 | Warn | Login failed. Incorrect password for email user@example.com. 
+2025-01-28 17:47:01.2327 | Info | Executing UnauthorizedObjectResult, writing value of type 'LoginPortal.Models.LoginResponse'. 
+2025-01-28 17:47:01.2327 | Info | Executed action LoginPortal.Controllers.AuthController.Login (LoginPortal) in 30.823ms 
+2025-01-28 17:47:01.2327 | Info | Executed endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-28 17:47:01.2392 | Info | Request finished HTTP/1.1 POST https://localhost:7185/api/Auth/Login - 401 - application/json;+charset=utf-8 35.2620ms 
+2025-01-28 17:47:19.6067 | Info | Request starting HTTP/2 POST https://localhost:7185/api/Auth/password-reset - application/json 59 
+2025-01-28 17:47:19.6164 | Info | Executing endpoint 'LoginPortal.Controllers.AuthController.RequestPasswordReset (LoginPortal)' 
+2025-01-28 17:47:19.6302 | Info | Route matched with {action = "RequestPasswordReset", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RequestPasswordReset(LoginPortal.Models.PasswordResetRequest) on controller LoginPortal.Controllers.AuthController (LoginPortal). 
+2025-01-28 17:47:19.6541 | Info | Password reset requested for email user@example.com. 
+2025-01-28 17:47:19.8259 | Info | Executed DbCommand (5ms) [Parameters=[@__email_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [userDetails] AS [u]
+        WHERE [u].[email] = @__email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END 
+2025-01-28 17:47:19.8399 | Info | Executed DbCommand (1ms) [Parameters=[@__email_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[user_id], [u].[address], [u].[created_at], [u].[date_of_birth], [u].[email], [u].[first_name], [u].[hashed_password], [u].[is_verified], [u].[last_name], [u].[phone_number], [u].[profile_picture_url], [u].[role], [u].[updated_at]
+FROM [userDetails] AS [u]
+WHERE [u].[email] = @__email_0 
+2025-01-28 17:47:19.9243 | Info | Password reset successful for email user@example.com. 
+2025-01-28 17:47:19.9285 | Info | Executing OkObjectResult, writing value of type 'LoginPortal.Models.PasswordResetResponse'. 
+2025-01-28 17:47:19.9449 | Info | Executed action LoginPortal.Controllers.AuthController.RequestPasswordReset (LoginPortal) in 311.9151ms 
+2025-01-28 17:47:19.9449 | Info | Executed endpoint 'LoginPortal.Controllers.AuthController.RequestPasswordReset (LoginPortal)' 
+2025-01-28 17:47:19.9449 | Info | Request finished HTTP/2 POST https://localhost:7185/api/Auth/password-reset - 200 - application/json;+charset=utf-8 346.1849ms 
+2025-01-28 17:47:26.9422 | Info | Request starting HTTP/1.1 POST https://localhost:7185/api/Auth/Login - application/json;+charset=utf-8 51 
+2025-01-28 17:47:26.9422 | Info | Executing endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-28 17:47:26.9422 | Info | Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LoginPortal.Models.LoginRequest) on controller LoginPortal.Controllers.AuthController (LoginPortal). 
+2025-01-28 17:47:26.9422 | Info | Login endpoint hit. 
+2025-01-28 17:47:26.9748 | Info | Executed DbCommand (17ms) [Parameters=[@__email_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[user_id], [u].[address], [u].[created_at], [u].[date_of_birth], [u].[email], [u].[first_name], [u].[hashed_password], [u].[is_verified], [u].[last_name], [u].[phone_number], [u].[profile_picture_url], [u].[role], [u].[updated_at]
+FROM [userDetails] AS [u]
+WHERE [u].[email] = @__email_0 
+2025-01-28 17:47:26.9748 | Warn | Login failed. Incorrect password for email user@example.com. 
+2025-01-28 17:47:26.9748 | Info | Executing UnauthorizedObjectResult, writing value of type 'LoginPortal.Models.LoginResponse'. 
+2025-01-28 17:47:26.9748 | Info | Executed action LoginPortal.Controllers.AuthController.Login (LoginPortal) in 32.6419ms 
+2025-01-28 17:47:26.9900 | Info | Executed endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-28 17:47:26.9900 | Info | Request finished HTTP/1.1 POST https://localhost:7185/api/Auth/Login - 401 - application/json;+charset=utf-8 49.0983ms 
+2025-01-28 17:47:33.6009 | Info | Request starting HTTP/1.1 POST https://localhost:7185/api/Auth/Login - application/json;+charset=utf-8 50 
+2025-01-28 17:47:33.6009 | Info | Executing endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-28 17:47:33.6009 | Info | Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LoginPortal.Models.LoginRequest) on controller LoginPortal.Controllers.AuthController (LoginPortal). 
+2025-01-28 17:47:33.6009 | Info | Login endpoint hit. 
+2025-01-28 17:47:33.6217 | Info | Executed DbCommand (7ms) [Parameters=[@__email_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[user_id], [u].[address], [u].[created_at], [u].[date_of_birth], [u].[email], [u].[first_name], [u].[hashed_password], [u].[is_verified], [u].[last_name], [u].[phone_number], [u].[profile_picture_url], [u].[role], [u].[updated_at]
+FROM [userDetails] AS [u]
+WHERE [u].[email] = @__email_0 
+2025-01-28 17:47:33.6217 | Info | Login successful for user user@example.com. 
+2025-01-28 17:47:33.6217 | Info | Executing OkObjectResult, writing value of type 'LoginPortal.Models.LoginResponse'. 
+2025-01-28 17:47:33.6298 | Info | Executed action LoginPortal.Controllers.AuthController.Login (LoginPortal) in 23.5942ms 
+2025-01-28 17:47:33.6298 | Info | Executed endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-28 17:47:33.6298 | Info | Request finished HTTP/1.1 POST https://localhost:7185/api/Auth/Login - 200 - application/json;+charset=utf-8 33.1258ms 
+2025-01-29 11:47:59.1125 | Info | Application Starting... 
+2025-01-29 11:48:02.5763 | Info | User profile is available. Using 'C:\Users\COMP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-01-29 11:48:03.3020 | Info | Now listening on: https://localhost:7185 
+2025-01-29 11:48:03.3020 | Info | Now listening on: http://localhost:5002 
+2025-01-29 11:48:03.4884 | Info | Application started. Press Ctrl+C to shut down. 
+2025-01-29 11:48:03.4884 | Info | Hosting environment: Development 
+2025-01-29 11:48:03.4884 | Info | Content root path: D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal 
+2025-01-29 11:48:08.2836 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.html - - - 
+2025-01-29 11:48:09.2274 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.html - 200 - text/html;charset=utf-8 956.4509ms 
+2025-01-29 11:48:11.9102 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.js - - - 
+2025-01-29 11:48:11.9102 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.js - 200 - application/javascript;charset=utf-8 4.8518ms 
+2025-01-29 11:48:13.0507 | Info | Request starting HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - - - 
+2025-01-29 11:48:13.0770 | Info | Request finished HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - 200 13774 application/javascript;+charset=utf-8 26.2029ms 
+2025-01-29 11:48:13.7193 | Info | Request starting HTTP/2 GET https://localhost:7185/_vs/browserLink - - - 
+2025-01-29 11:48:13.8167 | Info | Request finished HTTP/2 GET https://localhost:7185/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 97.3550ms 
+2025-01-29 11:48:14.8836 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - - - 
+2025-01-29 11:48:14.9482 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 64.6295ms 
+2025-01-29 11:48:23.6659 | Info | Request starting HTTP/1.1 POST https://localhost:7185/api/Auth/Login - application/json;+charset=utf-8 52 
+2025-01-29 11:48:23.7001 | Info | Executing endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-29 11:48:23.7763 | Info | Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LoginPortal.Models.LoginRequest) on controller LoginPortal.Controllers.AuthController (LoginPortal). 
+2025-01-29 11:48:25.2447 | Info | Login endpoint hit. 
+2025-01-29 11:48:30.4970 | Info | Executed DbCommand (248ms) [Parameters=[@__email_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[user_id], [u].[address], [u].[created_at], [u].[date_of_birth], [u].[email], [u].[first_name], [u].[hashed_password], [u].[is_verified], [u].[last_name], [u].[phone_number], [u].[profile_picture_url], [u].[role], [u].[updated_at]
+FROM [userDetails] AS [u]
+WHERE [u].[email] = @__email_0 
+2025-01-29 11:48:30.6945 | Info | Login successful for user admin@example.com. 
+2025-01-29 11:48:30.7097 | Info | Executing OkObjectResult, writing value of type 'LoginPortal.Models.LoginResponse'. 
+2025-01-29 11:48:30.7502 | Info | Executed action LoginPortal.Controllers.AuthController.Login (LoginPortal) in 6959.4562ms 
+2025-01-29 11:48:30.7591 | Info | Executed endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-29 11:48:30.7790 | Info | Request finished HTTP/1.1 POST https://localhost:7185/api/Auth/Login - 200 - application/json;+charset=utf-8 7113.3251ms 
+2025-01-31 15:10:44.9098 | Info | Application Starting... 
+2025-01-31 15:10:47.6505 | Info | User profile is available. Using 'C:\Users\COMP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-01-31 15:10:49.6648 | Info | Now listening on: https://localhost:7185 
+2025-01-31 15:10:49.6648 | Info | Now listening on: http://localhost:5002 
+2025-01-31 15:10:49.8767 | Info | Application started. Press Ctrl+C to shut down. 
+2025-01-31 15:10:49.8797 | Info | Hosting environment: Development 
+2025-01-31 15:10:49.8797 | Info | Content root path: D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal 
+2025-01-31 15:10:59.0711 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.html - - - 
+2025-01-31 15:11:00.5926 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.html - 200 - text/html;charset=utf-8 1630.6755ms 
+2025-01-31 15:11:01.2267 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.js - - - 
+2025-01-31 15:11:01.3050 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.js - 200 - application/javascript;charset=utf-8 78.4134ms 
+2025-01-31 15:11:01.3989 | Info | Request starting HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - - - 
+2025-01-31 15:11:01.4532 | Info | Request finished HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - 200 13774 application/javascript;+charset=utf-8 54.2986ms 
+2025-01-31 15:11:01.5241 | Info | Request starting HTTP/2 GET https://localhost:7185/_vs/browserLink - - - 
+2025-01-31 15:11:01.8949 | Info | Request finished HTTP/2 GET https://localhost:7185/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 370.7793ms 
+2025-01-31 15:11:03.2267 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - - - 
+2025-01-31 15:11:03.3308 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 104.1090ms 
+2025-01-31 15:14:28.4140 | Info | Application Starting... 
+2025-01-31 15:14:30.3013 | Info | User profile is available. Using 'C:\Users\COMP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-01-31 15:14:30.9687 | Info | Now listening on: https://localhost:7185 
+2025-01-31 15:14:30.9687 | Info | Now listening on: http://localhost:5002 
+2025-01-31 15:14:31.3137 | Info | Application started. Press Ctrl+C to shut down. 
+2025-01-31 15:14:31.4556 | Info | Hosting environment: Development 
+2025-01-31 15:14:31.8537 | Info | Content root path: D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal 
+2025-01-31 15:14:36.1155 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.html - - - 
+2025-01-31 15:14:36.6987 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.html - 200 - text/html;charset=utf-8 583.4728ms 
+2025-01-31 15:14:36.7869 | Info | Request starting HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - - - 
+2025-01-31 15:14:36.8013 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.js - - - 
+2025-01-31 15:14:36.8013 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.js - 200 - application/javascript;charset=utf-8 12.8807ms 
+2025-01-31 15:14:36.8790 | Info | Request finished HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - 200 13774 application/javascript;+charset=utf-8 92.6280ms 
+2025-01-31 15:14:36.9139 | Info | Request starting HTTP/2 GET https://localhost:7185/_vs/browserLink - - - 
+2025-01-31 15:14:37.0325 | Info | Request finished HTTP/2 GET https://localhost:7185/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 118.6561ms 
+2025-01-31 15:14:37.5242 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - - - 
+2025-01-31 15:14:37.7100 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 185.6992ms 
+2025-01-31 15:14:53.8703 | Info | Request starting HTTP/1.1 POST https://localhost:7185/Auth/Login - application/json;+charset=utf-8 52 
+2025-01-31 15:14:53.9075 | Info | Request finished HTTP/1.1 POST https://localhost:7185/Auth/Login - 404 0 - 38.0980ms 
+2025-01-31 15:14:53.9075 | Info | Request reached the end of the middleware pipeline without being handled by application code. Request path: POST https://localhost:7185/Auth/Login, Response status code: 404 
+2025-01-31 15:15:20.0489 | Info | Request starting HTTP/2 POST https://localhost:7185/api/Auth/login - application/json 61 
+2025-01-31 15:15:20.1004 | Info | CORS policy execution failed. 
+2025-01-31 15:15:20.1004 | Info | Request origin https://localhost:7185 does not have permission to access the resource. 
+2025-01-31 15:15:20.1004 | Info | Executing endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-31 15:15:20.1649 | Info | Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LoginPortal.Models.LoginRequest) on controller LoginPortal.Controllers.AuthController (LoginPortal). 
+2025-01-31 15:15:29.5162 | Info | Login endpoint hit. 
+2025-01-31 15:15:35.1493 | Info | Executed DbCommand (289ms) [Parameters=[@__email_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[user_id], [u].[address], [u].[created_at], [u].[date_of_birth], [u].[email], [u].[first_name], [u].[hashed_password], [u].[is_verified], [u].[last_name], [u].[phone_number], [u].[profile_picture_url], [u].[role], [u].[updated_at]
+FROM [userDetails] AS [u]
+WHERE [u].[email] = @__email_0 
+2025-01-31 15:15:38.8104 | Info | Login successful for user admin@example.com. 
+2025-01-31 15:15:40.8206 | Info | Executing OkObjectResult, writing value of type 'LoginPortal.Models.LoginResponse'. 
+2025-01-31 15:15:42.7547 | Info | Executed action LoginPortal.Controllers.AuthController.Login (LoginPortal) in 22578.0287ms 
+2025-01-31 15:15:42.7547 | Info | Executed endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-31 15:15:42.7771 | Info | Request finished HTTP/2 POST https://localhost:7185/api/Auth/login - 200 - application/json;+charset=utf-8 22728.1441ms 
+2025-01-31 15:16:24.1406 | Info | Application Starting... 
+2025-01-31 15:16:25.8824 | Info | User profile is available. Using 'C:\Users\COMP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-01-31 15:16:27.1146 | Info | Now listening on: https://localhost:7185 
+2025-01-31 15:16:27.1146 | Info | Now listening on: http://localhost:5002 
+2025-01-31 15:16:27.3366 | Info | Application started. Press Ctrl+C to shut down. 
+2025-01-31 15:16:27.3721 | Info | Hosting environment: Development 
+2025-01-31 15:16:27.3788 | Info | Content root path: D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal 
+2025-01-31 15:16:28.5470 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.html - - - 
+2025-01-31 15:16:29.2713 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.html - 200 - text/html;charset=utf-8 728.0105ms 
+2025-01-31 15:16:29.3559 | Info | Request starting HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - - - 
+2025-01-31 15:16:29.3559 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.js - - - 
+2025-01-31 15:16:29.4522 | Info | Request finished HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - 200 13774 application/javascript;+charset=utf-8 97.5049ms 
+2025-01-31 15:16:29.4779 | Info | Request starting HTTP/2 GET https://localhost:7185/_vs/browserLink - - - 
+2025-01-31 15:16:29.4954 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.js - 200 - application/javascript;charset=utf-8 134.5062ms 
+2025-01-31 15:16:29.6656 | Info | Request finished HTTP/2 GET https://localhost:7185/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 187.7632ms 
+2025-01-31 15:16:29.8161 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - - - 
+2025-01-31 15:16:29.9333 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 117.2939ms 
+2025-01-31 15:16:42.9714 | Info | Request starting HTTP/1.1 POST https://localhost:7185/Auth/Login - application/json;+charset=utf-8 52 
+2025-01-31 15:16:43.0186 | Info | Request finished HTTP/1.1 POST https://localhost:7185/Auth/Login - 404 0 - 47.2583ms 
+2025-01-31 15:16:43.0197 | Info | Request reached the end of the middleware pipeline without being handled by application code. Request path: POST https://localhost:7185/Auth/Login, Response status code: 404 
+2025-01-31 15:16:53.7795 | Info | Request starting HTTP/1.1 POST https://localhost:7185/Auth/Login - application/json;+charset=utf-8 52 
+2025-01-31 15:16:53.8160 | Info | Request finished HTTP/1.1 POST https://localhost:7185/Auth/Login - 404 0 - 36.5376ms 
+2025-01-31 15:16:53.8165 | Info | Request reached the end of the middleware pipeline without being handled by application code. Request path: POST https://localhost:7185/Auth/Login, Response status code: 404 
+2025-01-31 15:17:25.0202 | Info | Application Starting... 
+2025-01-31 15:17:27.4691 | Info | User profile is available. Using 'C:\Users\COMP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-01-31 15:17:28.1249 | Info | Now listening on: https://localhost:7185 
+2025-01-31 15:17:28.1249 | Info | Now listening on: http://localhost:5002 
+2025-01-31 15:17:28.7775 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.html - - - 
+2025-01-31 15:17:30.0515 | Info | Application started. Press Ctrl+C to shut down. 
+2025-01-31 15:17:30.0515 | Info | Hosting environment: Development 
+2025-01-31 15:17:30.0711 | Info | Content root path: D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal 
+2025-01-31 15:17:30.2944 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.html - 200 - text/html;charset=utf-8 1524.7322ms 
+2025-01-31 15:17:30.3557 | Info | Request starting HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - - - 
+2025-01-31 15:17:30.3557 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.js - - - 
+2025-01-31 15:17:30.4036 | Info | Request finished HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - 200 13774 application/javascript;+charset=utf-8 47.8718ms 
+2025-01-31 15:17:30.4036 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.js - 200 - application/javascript;charset=utf-8 50.0288ms 
+2025-01-31 15:17:30.4377 | Info | Request starting HTTP/2 GET https://localhost:7185/_vs/browserLink - - - 
+2025-01-31 15:17:30.5806 | Info | Request finished HTTP/2 GET https://localhost:7185/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 143.5544ms 
+2025-01-31 15:17:30.9705 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - - - 
+2025-01-31 15:17:31.1010 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 130.5857ms 
+2025-01-31 15:17:44.8683 | Info | Request starting HTTP/1.1 POST https://localhost:7185/Auth/Login - application/json;+charset=utf-8 52 
+2025-01-31 15:17:44.9059 | Info | Request finished HTTP/1.1 POST https://localhost:7185/Auth/Login - 404 0 - 37.7803ms 
+2025-01-31 15:17:44.9059 | Info | Request reached the end of the middleware pipeline without being handled by application code. Request path: POST https://localhost:7185/Auth/Login, Response status code: 404 
+2025-01-31 15:18:16.8391 | Info | Application Starting... 
+2025-01-31 15:18:19.9564 | Info | User profile is available. Using 'C:\Users\COMP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-01-31 15:18:20.5466 | Info | Now listening on: https://localhost:7185 
+2025-01-31 15:18:20.5466 | Info | Now listening on: http://localhost:5002 
+2025-01-31 15:18:21.3267 | Info | Application started. Press Ctrl+C to shut down. 
+2025-01-31 15:18:21.4876 | Info | Hosting environment: Development 
+2025-01-31 15:18:21.6953 | Info | Content root path: D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal 
+2025-01-31 15:18:21.8850 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.html - - - 
+2025-01-31 15:18:22.5515 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.html - 200 - text/html;charset=utf-8 677.7218ms 
+2025-01-31 15:18:25.1677 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.js - - - 
+2025-01-31 15:18:25.1677 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.js - 200 - application/javascript;charset=utf-8 3.5712ms 
+2025-01-31 15:18:25.3236 | Info | Request starting HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - - - 
+2025-01-31 15:18:25.3236 | Info | Request starting HTTP/2 GET https://localhost:7185/_vs/browserLink - - - 
+2025-01-31 15:18:25.3485 | Info | Request finished HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - 200 13774 application/javascript;+charset=utf-8 24.9388ms 
+2025-01-31 15:18:25.4023 | Info | Request finished HTTP/2 GET https://localhost:7185/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 72.7835ms 
+2025-01-31 15:18:25.7854 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - - - 
+2025-01-31 15:18:25.8464 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 60.7446ms 
+2025-01-31 15:19:09.3505 | Info | Request starting HTTP/1.1 POST https://localhost:7185/api/Auth/Login - application/json;+charset=utf-8 52 
+2025-01-31 15:19:09.3986 | Info | Executing endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-31 15:19:09.4394 | Info | Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LoginPortal.Models.LoginRequest) on controller LoginPortal.Controllers.AuthController (LoginPortal). 
+2025-01-31 15:19:09.8566 | Info | Login endpoint hit. 
+2025-01-31 15:19:12.4915 | Info | Executed DbCommand (116ms) [Parameters=[@__email_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[user_id], [u].[address], [u].[created_at], [u].[date_of_birth], [u].[email], [u].[first_name], [u].[hashed_password], [u].[is_verified], [u].[last_name], [u].[phone_number], [u].[profile_picture_url], [u].[role], [u].[updated_at]
+FROM [userDetails] AS [u]
+WHERE [u].[email] = @__email_0 
+2025-01-31 15:19:12.6898 | Info | Login successful for user admin@example.com. 
+2025-01-31 15:19:12.7035 | Info | Executing OkObjectResult, writing value of type 'LoginPortal.Models.LoginResponse'. 
+2025-01-31 15:19:12.7260 | Info | Executed action LoginPortal.Controllers.AuthController.Login (LoginPortal) in 3278.8543ms 
+2025-01-31 15:19:12.7260 | Info | Executed endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-31 15:19:12.7466 | Info | Request finished HTTP/1.1 POST https://localhost:7185/api/Auth/Login - 200 - application/json;+charset=utf-8 3395.9646ms 
+2025-01-31 18:33:21.1382 | Info | Application Starting... 
+2025-01-31 18:33:23.5412 | Info | User profile is available. Using 'C:\Users\COMP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-01-31 18:33:24.4055 | Info | Now listening on: https://localhost:7185 
+2025-01-31 18:33:24.4055 | Info | Now listening on: http://localhost:5002 
+2025-01-31 18:33:25.0631 | Info | Application started. Press Ctrl+C to shut down. 
+2025-01-31 18:33:25.2932 | Info | Hosting environment: Development 
+2025-01-31 18:33:25.4098 | Info | Content root path: D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal 
+2025-01-31 18:33:25.6398 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.html - - - 
+2025-01-31 18:33:26.5269 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.html - 200 - text/html;charset=utf-8 890.3171ms 
+2025-01-31 18:33:26.5581 | Info | Request starting HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - - - 
+2025-01-31 18:33:26.5959 | Info | Request finished HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - 200 13774 application/javascript;+charset=utf-8 37.7689ms 
+2025-01-31 18:33:26.6476 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.js - - - 
+2025-01-31 18:33:26.7319 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.js - 200 - application/javascript;charset=utf-8 84.3802ms 
+2025-01-31 18:33:26.7555 | Info | Request starting HTTP/2 GET https://localhost:7185/_vs/browserLink - - - 
+2025-01-31 18:33:26.9920 | Info | Request finished HTTP/2 GET https://localhost:7185/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 236.4699ms 
+2025-01-31 18:33:27.2213 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - - - 
+2025-01-31 18:33:27.3628 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 141.7968ms 
+2025-01-31 18:33:51.4152 | Info | Request starting HTTP/2 POST https://localhost:7185/api/Auth/login - application/json 61 
+2025-01-31 18:33:51.4581 | Info | CORS policy execution failed. 
+2025-01-31 18:33:51.4581 | Info | Request origin https://localhost:7185 does not have permission to access the resource. 
+2025-01-31 18:33:51.5050 | Info | Executing endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-31 18:33:51.5411 | Info | Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LoginPortal.Models.LoginRequest) on controller LoginPortal.Controllers.AuthController (LoginPortal). 
+2025-01-31 18:33:52.9992 | Info | Login endpoint hit. 
+2025-01-31 18:33:57.8838 | Info | Executed DbCommand (317ms) [Parameters=[@__email_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[user_id], [u].[address], [u].[created_at], [u].[date_of_birth], [u].[email], [u].[first_name], [u].[hashed_password], [u].[is_verified], [u].[last_name], [u].[phone_number], [u].[profile_picture_url], [u].[role], [u].[updated_at]
+FROM [userDetails] AS [u]
+WHERE [u].[email] = @__email_0 
+2025-01-31 18:33:58.1112 | Info | Login successful for user admin@example.com. 
+2025-01-31 18:33:58.1287 | Info | Executing OkObjectResult, writing value of type 'LoginPortal.Models.LoginResponse'. 
+2025-01-31 18:33:58.1555 | Info | Executed action LoginPortal.Controllers.AuthController.Login (LoginPortal) in 6601.9312ms 
+2025-01-31 18:33:58.1555 | Info | Executed endpoint 'LoginPortal.Controllers.AuthController.Login (LoginPortal)' 
+2025-01-31 18:33:58.1806 | Info | Request finished HTTP/2 POST https://localhost:7185/api/Auth/login - 200 - application/json;+charset=utf-8 6765.5431ms 
+2025-01-31 18:35:41.5996 | Info | Application Starting... 
+2025-01-31 18:35:44.3946 | Info | User profile is available. Using 'C:\Users\COMP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-01-31 18:35:45.3785 | Info | Now listening on: https://localhost:7185 
+2025-01-31 18:35:45.3785 | Info | Now listening on: http://localhost:5002 
+2025-01-31 18:35:45.7950 | Info | Application started. Press Ctrl+C to shut down. 
+2025-01-31 18:35:45.7950 | Info | Hosting environment: Development 
+2025-01-31 18:35:45.7950 | Info | Content root path: D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal 
+2025-01-31 18:43:10.6454 | Info | Application Starting... 
+2025-01-31 18:43:13.4248 | Info | User profile is available. Using 'C:\Users\COMP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-01-31 18:43:14.3060 | Info | Now listening on: https://localhost:7185 
+2025-01-31 18:43:14.3060 | Info | Now listening on: http://localhost:5002 
+2025-01-31 18:43:14.4933 | Info | Application started. Press Ctrl+C to shut down. 
+2025-01-31 18:43:14.4933 | Info | Hosting environment: Development 
+2025-01-31 18:43:14.4933 | Info | Content root path: D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal 
+2025-01-31 18:50:51.1543 | Info | Application Starting... 
+2025-01-31 18:50:54.0302 | Info | User profile is available. Using 'C:\Users\COMP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-01-31 18:50:54.9182 | Info | Now listening on: https://localhost:7185 
+2025-01-31 18:50:54.9274 | Info | Now listening on: http://localhost:5002 
+2025-01-31 18:50:55.5458 | Info | Application started. Press Ctrl+C to shut down. 
+2025-01-31 18:50:55.5605 | Info | Hosting environment: Development 
+2025-01-31 18:50:55.5789 | Info | Content root path: D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal 
+2025-01-31 18:52:07.6258 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.html - - - 
+2025-01-31 18:52:08.0095 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.html - 200 - text/html;charset=utf-8 378.3940ms 
+2025-01-31 18:52:08.0364 | Info | Request starting HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - - - 
+2025-01-31 18:52:08.0554 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.js - - - 
+2025-01-31 18:52:08.0718 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.js - 200 - application/javascript;charset=utf-8 35.7451ms 
+2025-01-31 18:52:08.0914 | Info | Request finished HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - 200 13774 application/javascript;+charset=utf-8 55.1192ms 
+2025-01-31 18:52:08.1313 | Info | Request starting HTTP/2 GET https://localhost:7185/_vs/browserLink - - - 
+2025-01-31 18:52:08.2579 | Info | Request finished HTTP/2 GET https://localhost:7185/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 126.7618ms 
+2025-01-31 18:52:08.4392 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - - - 
+2025-01-31 18:52:08.5311 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/favicon-32x32.png - - - 
+2025-01-31 18:52:08.5588 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 119.5641ms 
+2025-01-31 18:52:08.5941 | Info | Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A' 
+2025-01-31 18:52:08.6059 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/favicon-32x32.png - 200 628 image/png 75.1396ms 
+2025-01-31 18:54:06.1175 | Info | Application Starting... 
+2025-01-31 18:54:09.4292 | Info | User profile is available. Using 'C:\Users\COMP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-01-31 18:54:10.6104 | Info | Now listening on: https://localhost:7185 
+2025-01-31 18:54:10.6549 | Info | Now listening on: http://localhost:5002 
+2025-01-31 18:54:10.9438 | Info | Application started. Press Ctrl+C to shut down. 
+2025-01-31 18:54:10.9943 | Info | Hosting environment: Development 
+2025-01-31 18:54:10.9943 | Info | Content root path: D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal 
+2025-01-31 18:54:25.3302 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.html - - - 
+2025-01-31 18:54:25.7015 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.html - 200 - text/html;charset=utf-8 361.7556ms 
+2025-01-31 18:54:25.7447 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.js - - - 
+2025-01-31 18:54:25.7447 | Info | Request starting HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - - - 
+2025-01-31 18:54:25.7582 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.js - 200 - application/javascript;charset=utf-8 14.1168ms 
+2025-01-31 18:54:25.7900 | Info | Request finished HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - 200 13774 application/javascript;+charset=utf-8 44.4702ms 
+2025-01-31 18:54:25.8138 | Info | Request starting HTTP/2 GET https://localhost:7185/_vs/browserLink - - - 
+2025-01-31 18:54:26.0078 | Info | Request finished HTTP/2 GET https://localhost:7185/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 194.2199ms 
+2025-01-31 18:54:26.1450 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - - - 
+2025-01-31 18:54:26.2516 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/favicon-32x32.png - - - 
+2025-01-31 18:54:26.2642 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 119.1816ms 
+2025-01-31 18:54:26.2900 | Info | Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A' 
+2025-01-31 18:54:26.2900 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/favicon-32x32.png - 200 628 image/png 41.9678ms 
+2025-01-31 19:27:18.8022 | Info | Application Starting... 
+2025-01-31 19:27:21.5051 | Info | User profile is available. Using 'C:\Users\COMP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-01-31 19:27:22.0767 | Info | Now listening on: https://localhost:7185 
+2025-01-31 19:27:22.0767 | Info | Now listening on: http://localhost:5002 
+2025-01-31 19:27:22.3662 | Info | Application started. Press Ctrl+C to shut down. 
+2025-01-31 19:27:22.3832 | Info | Hosting environment: Development 
+2025-01-31 19:27:22.4082 | Info | Content root path: D:\COMP\Desktop\Heth\Office\MicroService\LoginPortal 
+2025-01-31 19:27:23.9107 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.html - - - 
+2025-01-31 19:27:25.0678 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.html - 200 - text/html;charset=utf-8 1126.4301ms 
+2025-01-31 19:27:25.1397 | Info | Request starting HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - - - 
+2025-01-31 19:27:25.1397 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/index.js - - - 
+2025-01-31 19:27:25.3235 | Info | Request starting HTTP/2 GET https://localhost:7185/_vs/browserLink - - - 
+2025-01-31 19:27:25.3482 | Info | Request finished HTTP/2 GET https://localhost:7185/_framework/aspnetcore-browser-refresh.js - 200 13774 application/javascript;+charset=utf-8 208.3854ms 
+2025-01-31 19:27:25.3660 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/index.js - 200 - application/javascript;charset=utf-8 226.4913ms 
+2025-01-31 19:27:25.5663 | Info | Request finished HTTP/2 GET https://localhost:7185/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 242.7579ms 
+2025-01-31 19:27:25.8414 | Info | Request starting HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - - - 
+2025-01-31 19:27:26.3232 | Info | Request finished HTTP/2 GET https://localhost:7185/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 481.8915ms 

@@ -1,0 +1,3 @@
+2025-01-28 10:25:26.3226 | Info | User profile is available. Using 'C:\Users\COMP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-01-28 10:25:26.9056 | Info | Now listening on: https://localhost:7185 
+2025-01-28 10:25:26.9108 | Info | Now listening on: http://localhost:5002 
