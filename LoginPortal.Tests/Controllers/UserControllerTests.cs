@@ -76,7 +76,7 @@ namespace LoginPortal.Tests.Controllers
         public async Task ResetPassword_ReturnsBadRequest_WhenTokenIsInvalid()
         {
             // Arrange
-            var resetPasswordRequest = new ResetPasswordRequest
+            var resetPasswordRequest = new LoginPortal.Models.ResetPasswordRequest
             {
                 Email = "test@example.com",
                 ResetCode = "invalid-token",
