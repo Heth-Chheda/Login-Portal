@@ -164,12 +164,12 @@ namespace LoginPortal.Controllers
         }
         [HttpPost]
         [Route("reset-password")]
-        public async Task<IActionResult> ResetPassword([FromBody] PasswordResetRequest request)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest("Invalid data.");
 
-            var result = await _userServices.ResetPasswordAsync(request.Email, request.Password);
+            var result = await _userServices.ResetPasswordAsync(request.Email, request.ResetCode ,request.NewPassword);
 
             if (!result)
                 return BadRequest("Invalid token or email.");

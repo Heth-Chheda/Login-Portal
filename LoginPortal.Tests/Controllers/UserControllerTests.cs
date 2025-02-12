@@ -85,7 +85,7 @@ namespace LoginPortal.Tests.Controllers
 
             // Mocking the ResetPasswordAsync method to return false (invalid token)
             var mockUserService = new Mock<UserService>(_mockDbContext.Object, _mockUserManager.Object);
-            mockUserService.Setup(service => service.ResetPasswordAsync(resetPasswordRequest.Email, resetPasswordRequest.Password)).ReturnsAsync(false);
+            mockUserService.Setup(service => service.ResetPasswordAsync(resetPasswordRequest.Email, resetPasswordRequest.ResetCode, resetPasswordRequest.NewPassword)).ReturnsAsync(false);
 
             var controller = new UserController(mockUserService.Object, _mockEmailService.Object);
 
