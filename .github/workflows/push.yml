@@ -13,7 +13,7 @@ permissions:
 jobs:
   BuildAndTestLoginPortal:
     env:
-      SOLUTION: 'LoginPortal.sln'
+      SOLUTION: 'LoginPortal/LoginPortal.sln'
 
     runs-on: ubuntu-latest
 
