@@ -1,0 +1,171 @@
+name: Deploy LoginPortal
+
+on:
+  push:
+    tags:
+      - "v*-dev-deploy"
+      - "v*-qa-deploy"
+      - "v*-stage-deploy"
+      - "v*-prod-deploy"
+  workflow_dispatch:
+    inputs:
+      deploy_version:
+        type: string
+        description: Version to deploy in format vX.Y.Z
+      deploy_environment:
+        type: choice
+        description: Deploy Environment
+        options:
+          - dev
+          - qa
+          - stage
+          - prod
+
+jobs:
+
+  tagify:
+    name: Get Tag
+    runs-on: ubuntu-latest
+    outputs:
+      the_tag: ${{ steps.deploy_tag.outputs.TAG_NAME }}
+    steps:
+      - name: Get Deploy Tag
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          full_tag=${GITHUB_REF#refs/*/}
+          deploy_tag=${full_tag: 0:-7}
+          echo "VERSION=${deploy_tag}" >> "$GITHUB_ENV" 
+      - name: Manual Input
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          echo "VERSION=${{ github.event.inputs.deploy_version }}-${{ github.event.inputs.deploy_environment }}" >> "$GITHUB_ENV" 
+      - name: Output VAR
+        id: deploy_tag
+        run: |
+          echo "TAG_NAME=${{ env.VERSION }}" >> $GITHUB_OUTPUT
+
+  retag_image:
+    needs: [tagify]
+    runs-on: ubuntu-latest
+    if: ${{ endsWith(needs.tagify.outputs.the_tag, 'stage') || endsWith(needs.tagify.outputs.the_tag, 'prod') }}
+    env:
+      TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_ECR_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Retag and Push Docker Image
+        env:
+           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          IFS='-'
+          read -a parsed_tag <<< "${{ env.TAG_VERSION }}"
+          VERSION_ONLY=${parsed_tag[0]}
+          ENVIRONMENT=${parsed_tag[1]}
+          IFS=' '
+          QA_BASE=$VERSION_ONLY-qa
+          FULL_TAG=$REGISTRY/loginportal_api:$QA_BASE
+          NEW_TAG=$REGISTRY/loginportal_api:${{ env.TAG_VERSION }}
+          LATEST_TAG=$REGISTRY/loginportal_api:latest
+
+          docker pull $FULL_TAG
+          docker tag $FULL_TAG $NEW_TAG
+          docker push $NEW_TAG
+
+          if [ "$ENVIRONMENT" == "prod" ]; then
+            docker tag $FULL_TAG $LATEST_TAG
+            docker push $LATEST_TAG
+          fi
+
+  deploy_dev:
+    needs: [tagify]
+    runs-on: ubuntu-latest
+    if: ${{ endsWith(needs.tagify.outputs.the_tag, 'dev') }}
+    env:
+      TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set permissions for private key
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
+          chmod 600 key.pem
+
+      - name: Deploy to Dev Server
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.EC2_DEV_IP }} '
+            sudo docker pull ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}
+            sudo docker stop loginportal_dev || true
+            sudo docker rm loginportal_dev || true
+            sudo docker run -d --name loginportal_dev -p 8050:80 ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}'
+      
+  deploy_qa:
+    needs: [tagify]
+    runs-on: ubuntu-latest
+    if: ${{ endsWith(needs.tagify.outputs.the_tag, 'qa') }}
+    env:
+      TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set permissions for private key
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
+          chmod 600 key.pem
+
+      - name: Deploy to QA Server
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.EC2_QA_IP }} '
+            sudo docker pull ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}
+            sudo docker stop loginportal_qa || true
+            sudo docker rm loginportal_qa || true
+            sudo docker run -d --name loginportal_qa -p 8051:80 ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}'
+
+  deploy_stage:
+    needs: [tagify, retag_image]
+    runs-on: ubuntu-latest
+    if: ${{ endsWith(needs.tagify.outputs.the_tag, 'stage') }}
+    env:
+      TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set permissions for private key
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
+          chmod 600 key.pem
+
+      - name: Deploy to Stage Server
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.EC2_STAGE_IP }} '
+            sudo docker pull ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}
+            sudo docker stop loginportal_stage || true
+            sudo docker rm loginportal_stage || true
+            sudo docker run -d --name loginportal_stage -p 8052:80 ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}'
+
+  deploy_prod:
+    needs: [tagify, retag_image]
+    runs-on: ubuntu-latest
+    if: ${{ endsWith(needs.tagify.outputs.the_tag, 'prod') }}
+    env:
+      TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set permissions for private key
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
+          chmod 600 key.pem
+
+      - name: Deploy to Production Server
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.EC2_PROD_IP }} '
+            sudo docker pull ${{ env.REGISTRY }}/loginportal_api:latest
+            sudo docker stop loginportal_prod || true
+            sudo docker rm loginportal_prod || true
+            sudo docker run -d --name loginportal_prod -p 8053:80 ${{ env.REGISTRY }}/loginportal_api:latest'
