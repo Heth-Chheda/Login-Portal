@@ -169,7 +169,7 @@ namespace LoginPortal.Controllers
             if (!ModelState.IsValid)
                 return BadRequest("Invalid data.");
 
-            var result = await _userService.ResetPasswordAsync(request.Email, request.NewPassword);
+            var result = await _userServices.ResetPasswordAsync(request.Email, request.Password);
 
             if (!result)
                 return BadRequest("Invalid token or email.");
