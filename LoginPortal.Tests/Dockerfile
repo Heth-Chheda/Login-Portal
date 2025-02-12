@@ -1,24 +1,29 @@
 # See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
 # This stage is used when running from VS in fast mode (Default for Debug configuration)
-FROM mcr.microsoft.com/dotnet/runtime:8.0 AS base
+FROM mcr.microsoft.com/dotnet/runtime:9.0 AS base
 WORKDIR /app
 
 # This stage is used to build the service project
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copy the project files and restore dependencies
-COPY LoginPortal.Tests/LoginPortal.Tests.csproj LoginPortal.Tests/
-COPY LoginPortalApp/LoginPortalApp.csproj LoginPortalApp/
-COPY LoginPortal/LoginPortal.csproj LoginPortal/
+# Copy the solution file and project files
+COPY ./LoginPortal.sln ./
+COPY ./LoginPortal.Tests/LoginPortal.Tests.csproj ./LoginPortal.Tests/
+COPY ./LoginPortalApp/LoginPortalApp.csproj ./LoginPortalApp/
+COPY ./LoginPortal/LoginPortal.csproj ./LoginPortal/
+
+# Restore dependencies
 RUN dotnet restore "./LoginPortal.Tests/LoginPortal.Tests.csproj"
 
-# Copy the rest of the source code
-COPY . .
+# Copy all source code
+COPY ./LoginPortal/ ./LoginPortal/
+COPY ./LoginPortalApp/ ./LoginPortalApp/
+COPY ./LoginPortal.Tests/ ./LoginPortal.Tests/
 
-# Build the project
+# Build the test project
 WORKDIR /src/LoginPortal.Tests
 RUN dotnet build "./LoginPortal.Tests.csproj" -c $BUILD_CONFIGURATION -o /app/build
 

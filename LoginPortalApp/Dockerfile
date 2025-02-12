@@ -9,14 +9,17 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copy the solution and restore dependencies
-COPY LoginPortal.sln ./
-COPY LoginPortalApp/LoginPortalApp.csproj LoginPortalApp/
-COPY LoginPortal/LoginPortal.csproj LoginPortal/
-RUN dotnet restore "LoginPortal.sln"
+# Copy the solution file and project files
+COPY ./LoginPortal.sln ./
+COPY ./LoginPortalApp/LoginPortalApp.csproj ./LoginPortalApp/
+COPY ./LoginPortal/LoginPortal.csproj ./LoginPortal/
 
-# Copy the rest of the source code
-COPY . .
+# Restore dependencies
+RUN dotnet restore
+
+# Copy all source code
+COPY ./LoginPortal/ ./LoginPortal/
+COPY ./LoginPortalApp/ ./LoginPortalApp/
 
 # Build the project
 WORKDIR /src/LoginPortalApp

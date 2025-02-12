@@ -9,12 +9,13 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copy the project file and restore dependencies
-COPY LoginPortal/LoginPortal.csproj LoginPortal/
+# Copy the solution file and project file, then restore dependencies
+COPY ./LoginPortal.sln ./
+COPY ./LoginPortal/LoginPortal.csproj ./LoginPortal/
 RUN dotnet restore "LoginPortal/LoginPortal.csproj"
 
-# Copy the rest of the source code
-COPY LoginPortal/ LoginPortal/
+# Copy all source code
+COPY ./LoginPortal/ ./LoginPortal/
 
 # Build the project
 WORKDIR /src/LoginPortal
@@ -28,6 +29,10 @@ RUN dotnet publish "LoginPortal.csproj" -c $BUILD_CONFIGURATION -o /app/publish 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+# Expose the app
+EXPOSE 8080
+EXPOSE 8081
 
 # Entry point to run the API
 ENTRYPOINT ["dotnet", "LoginPortal.dll"]
