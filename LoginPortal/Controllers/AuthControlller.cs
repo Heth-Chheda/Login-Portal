@@ -162,5 +162,19 @@ namespace LoginPortal.Controllers
                 return StatusCode(500, new { errorCode = "ServerError", message = "An error occurred while processing your request." });
             }
         }
+        [HttpPost]
+        [Route("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid data.");
+
+            var result = await _userService.ResetPasswordAsync(request.Email, request.ResetCode, request.NewPassword);
+
+            if (!result)
+                return BadRequest("Invalid token or email.");
+
+            return Ok("Password reset successful.");
+        }
     }
 }
