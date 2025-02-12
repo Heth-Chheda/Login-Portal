@@ -10,12 +10,15 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 # Copy the solution file and project file, then restore dependencies
-COPY ./LoginPortal.sln ./
-COPY ./LoginPortal/LoginPortal.csproj ./LoginPortal/
+COPY ../LoginPortal.sln ./                
+# Go up one level to access the solution file
+COPY ./LoginPortal.csproj ./LoginPortal/  
+# Copy project file from current folder
 RUN dotnet restore "LoginPortal/LoginPortal.csproj"
 
 # Copy all source code
-COPY ./LoginPortal/ ./LoginPortal/
+COPY . ./LoginPortal/                    
+# Copy the rest of the source code
 
 # Build the project
 WORKDIR /src/LoginPortal
@@ -26,11 +29,11 @@ FROM build AS publish
 RUN dotnet publish "LoginPortal.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Final stage - Production
-FROM base AS final
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-# Expose the app
+# Expose the app on the required ports
 EXPOSE 8080
 EXPOSE 8081
 

@@ -1,11 +1,11 @@
-version: '3.9'
+version: "3.9"
 
 services:
   loginportalapp:
     image: login-portal-app-image:latest
     build:
-      context: .
-      dockerfile: LoginPortalApp/Dockerfile
+      context: ./LoginPortal
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
     depends_on:
@@ -31,7 +31,19 @@ services:
     volumes:
       - sql_data:/var/opt/mssql
     healthcheck:
-      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "admin123", "-Q", "SELECT 1"]
+      test:
+        [
+          "CMD",
+          "/opt/mssql-tools/bin/sqlcmd",
+          "-S",
+          "localhost",
+          "-U",
+          "sa",
+          "-P",
+          "admin123",
+          "-Q",
+          "SELECT 1",
+        ]
       interval: 20s
       timeout: 10s
       retries: 10
