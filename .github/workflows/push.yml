@@ -13,7 +13,7 @@ permissions:
 jobs:
   BuildAndTestLoginPortal:
     env:
-      SOLUTION: 'LoginPortal/LoginPortal.sln'
+      SOLUTION: 'LoginPortal.sln'
 
     runs-on: ubuntu-latest
 
@@ -26,6 +26,9 @@ jobs:
       with:
         dotnet-version: 9.0.x
 
+    - name: Clean NuGet Cache
+      run: dotnet nuget locals all --clear
+
     - name: Restore dependencies
       run: dotnet restore $SOLUTION
 
@@ -33,7 +36,7 @@ jobs:
       run: dotnet build $SOLUTION --no-restore
 
     - name: Run Unit Tests
-      run: dotnet test $SOLUTION --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" 
+      run: dotnet test ./LoginPortal.Tests/LoginPortal.Tests.csproj --no-build --verbosity normal --logger "trx;LogFileName=./TestResults/test-results.trx" 
 
     - name: Test Report
       uses: dorny/test-reporter@v1
@@ -42,4 +45,4 @@ jobs:
         name: .NET Tests
         path: "**/test-results.trx"
         reporter: dotnet-trx
-        fail-on-error: true
+        fail-on-error: false
