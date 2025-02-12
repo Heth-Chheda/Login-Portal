@@ -1,5 +1,8 @@
+version: '3.9'
+
 services:
   loginportalapp:
+    image: login-portal-app-image:latest
     build:
       context: .
       dockerfile: LoginPortalApp/Dockerfile
@@ -12,8 +15,8 @@ services:
       - login-portal-networks
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - API_URL=http://host.docker.internal:8080
-      - ConnectionStrings__DefaultConnection=Server=host.docker.internal,1433;Database=user_management_db;User Id=admin;Password=admin123;TrustServerCertificate=True
+      - API_URL=http://loginportal:8080
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=user_management_db;User Id=admin;Password=admin123;TrustServerCertificate=True
 
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2019-latest
@@ -34,6 +37,7 @@ services:
       retries: 10
 
   loginportal:
+    image: login-portal-api-image:latest
     build:
       context: ./LoginPortal
       dockerfile: Dockerfile

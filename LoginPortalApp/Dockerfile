@@ -1,32 +1,30 @@
-# Use the official image for ASP.NET Core
-FROM mcr.microsoft.com/dotnet/aspnet:9.0-nanoserver-1809 AS base
+# Use the official image for ASP.NET Core runtime
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
 # Use the SDK to build the project
-FROM mcr.microsoft.com/dotnet/sdk:9.0-nanoserver-1809 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Switch to root user temporarily for restore/build process
-USER root
-
 # Copy the solution and restore dependencies
-COPY ["LoginPortal.sln", "./"]
-COPY ["LoginPortalApp/LoginPortalApp.csproj", "LoginPortalApp/"]
-COPY ["LoginPortal/LoginPortal.csproj", "LoginPortal/"]
+COPY LoginPortal.sln ./
+COPY LoginPortalApp/LoginPortalApp.csproj LoginPortalApp/
+COPY LoginPortal/LoginPortal.csproj LoginPortal/
 RUN dotnet restore "LoginPortal.sln"
 
-# Copy the rest of the code
+# Copy the rest of the source code
 COPY . .
 
 # Build the project
-WORKDIR "/src/LoginPortalApp"
-RUN dotnet build "LoginPortalApp.csproj" -c Release -o /app/build
+WORKDIR /src/LoginPortalApp
+RUN dotnet build "LoginPortalApp.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Publish the service
 FROM build AS publish
-RUN dotnet publish "LoginPortalApp.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "LoginPortalApp.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Final stage - Production
 FROM base AS final
