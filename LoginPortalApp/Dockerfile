@@ -14,7 +14,6 @@ COPY ../LoginPortal.sln ./
 
 # Copy the project file and restore dependencies
 COPY ../LoginPortalApp/LoginPortalApp.csproj ./LoginPortalApp/
-RUN dotnet restore ../LoginPortalApp/LoginPortalApp.csproj
 
 # Copy all source code
 COPY ../LoginPortalApp ./LoginPortalApp/
