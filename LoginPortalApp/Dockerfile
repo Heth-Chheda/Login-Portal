@@ -24,6 +24,7 @@ RUN dotnet build LoginPortalApp.csproj -c $BUILD_CONFIGURATION -o /app/build
 
 # Publish the service
 FROM build AS publish
+WORKDIR /src/LoginPortalApp
 RUN dotnet publish LoginPortalApp.csproj -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Final stage - Production
