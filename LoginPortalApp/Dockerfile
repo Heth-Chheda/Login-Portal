@@ -12,6 +12,7 @@ WORKDIR /src
 COPY ./LoginPortal.sln ./
 COPY ./LoginPortal/*.csproj ./LoginPortal/
 COPY ./LoginPortalApp/*.csproj ./LoginPortalApp/
+COPY ./LoginPortal.Tests/*.csproj ./LoginPortal.Tests/
 
 # Restore dependencies for the entire solution
 RUN dotnet restore LoginPortal.sln
