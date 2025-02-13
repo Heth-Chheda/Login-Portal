@@ -43,47 +43,53 @@ jobs:
         run: |
           echo "TAG_NAME=${{ env.VERSION }}" >> $GITHUB_OUTPUT
 
-  retag_image:
+  build_and_push:
     needs: [tagify]
     runs-on: ubuntu-latest
-    if: ${{ endsWith(needs.tagify.outputs.the_tag, 'stage') || endsWith(needs.tagify.outputs.the_tag, 'prod') }}
     env:
       TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
+      REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
     steps:
       - uses: actions/checkout@v3
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_ECR_REGION }}
-
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Retag and Push Docker Image
-        env:
-           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      - name: Build and Push Backend Image
         run: |
-          IFS='-'
-          read -a parsed_tag <<< "${{ env.TAG_VERSION }}"
-          VERSION_ONLY=${parsed_tag[0]}
-          ENVIRONMENT=${parsed_tag[1]}
-          IFS=' '
-          QA_BASE=$VERSION_ONLY-qa
-          FULL_TAG=$REGISTRY/loginportal_api:$QA_BASE
-          NEW_TAG=$REGISTRY/loginportal_api:${{ env.TAG_VERSION }}
-          LATEST_TAG=$REGISTRY/loginportal_api:latest
+          docker build -t login-portal-api-image:${{ env.TAG_VERSION }} -f ./LoginPortal/Dockerfile ./LoginPortal
+          docker tag login-portal-api-image:${{ env.TAG_VERSION }} ${{ env.REGISTRY }}/login-portal-api-image:${{ env.TAG_VERSION }}
+          docker push ${{ env.REGISTRY }}/login-portal-api-image:${{ env.TAG_VERSION }}
 
-          docker pull $FULL_TAG
-          docker tag $FULL_TAG $NEW_TAG
-          docker push $NEW_TAG
+      - name: Build and Push Frontend Image
+        run: |
+          docker build -t login-portal-app-image:${{ env.TAG_VERSION }} -f ./LoginPortalApp/Dockerfile ./LoginPortalApp
+          docker tag login-portal-app-image:${{ env.TAG_VERSION }} ${{ env.REGISTRY }}/login-portal-app-image:${{ env.TAG_VERSION }}
+          docker push ${{ env.REGISTRY }}/login-portal-app-image:${{ env.TAG_VERSION }}
 
-          if [ "$ENVIRONMENT" == "prod" ]; then
+  retag_image:
+    needs: [build_and_push]
+    runs-on: ubuntu-latest
+    if: ${{ endsWith(needs.tagify.outputs.the_tag, 'stage') || endsWith(needs.tagify.outputs.the_tag, 'prod') }}
+    env:
+      TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
+      REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Retag and Push Docker Images
+        run: |
+          COMPONENTS=("login-portal-api-image" "login-portal-app-image")
+          for COMPONENT in "${COMPONENTS[@]}"; do
+            FULL_TAG=$REGISTRY/$COMPONENT:${{ env.TAG_VERSION }}
+            LATEST_TAG=$REGISTRY/$COMPONENT:latest
+            docker pull $FULL_TAG
             docker tag $FULL_TAG $LATEST_TAG
             docker push $LATEST_TAG
-          fi
+          done
 
   deploy_dev:
     needs: [tagify]
@@ -98,24 +104,17 @@ jobs:
         run: |
           echo "${{ secrets.EC2_SSH_KEY }}" > RportingKeyPair.pem
           chmod 600 RportingKeyPair.pem
-
       - name: Deploy to Dev Server
         run: |
           ssh -v -o StrictHostKeyChecking=no -i RportingKeyPair.pem ec2-user@${{ secrets.EC2_DEV_IP }} '
-            sudo docker pull ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}
+            sudo docker pull ${{ env.REGISTRY }}/login-portal-api-image:${{ env.TAG_VERSION }}
+            sudo docker pull ${{ env.REGISTRY }}/login-portal-app-image:${{ env.TAG_VERSION }}
+
             sudo docker stop loginportal_dev || true
             sudo docker rm loginportal_dev || true
-            sudo docker run -d --name loginportal_dev -p 8050:80 ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}'
-        continue-on-error: true
-        
-      - name: Retry with ec2-user
-        if: ${{ failure() }}
-        run: |
-          ssh -v -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_DEV_IP }} '
-            sudo docker pull ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}
-            sudo docker stop loginportal_dev || true
-            sudo docker rm loginportal_dev || true
-            sudo docker run -d --name loginportal_dev -p 8050:80 ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}'
+
+            sudo docker-compose -f /path/to/docker-compose.yml up -d
+          '
 
   deploy_qa:
     needs: [tagify]
@@ -130,21 +129,14 @@ jobs:
         run: |
           echo "${{ secrets.EC2_SSH_KEY }}" > RportingKeyPair.pem
           chmod 600 RportingKeyPair.pem
-
       - name: Deploy to QA Server
         run: |
           ssh -v -o StrictHostKeyChecking=no -i RportingKeyPair.pem ec2-user@${{ secrets.EC2_QA_IP }} '
-            sudo docker pull ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}
-            sudo docker stop loginportal_qa || true
-            sudo docker rm loginportal_qa || true
-            sudo docker run -d --name loginportal_qa -p 8051:80 ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}'
-        continue-on-error: true
+            sudo docker pull ${{ env.REGISTRY }}/login-portal-api-image:${{ env.TAG_VERSION }}
+            sudo docker pull ${{ env.REGISTRY }}/login-portal-app-image:${{ env.TAG_VERSION }}
 
-      - name: Retry with ec2-user
-        if: ${{ failure() }}
-        run: |
-          ssh -v -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_QA_IP }} '
-            sudo docker pull ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}
             sudo docker stop loginportal_qa || true
             sudo docker rm loginportal_qa || true
-            sudo docker run -d --name loginportal_qa -p 8051:80 ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}'
+
+            sudo docker-compose -f /path/to/docker-compose.yml up -d
+          '
