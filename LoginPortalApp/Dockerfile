@@ -1,20 +1,21 @@
-# Use the official image for ASP.NET Core runtime
+# Use the official ASP.NET Core runtime as the base image
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
-# Use the SDK to build the project
+# Use the SDK image for building the application
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copy the solution file and project files
-COPY ./LoginPortal.sln ./
+# Copy solution file and project files for LoginPortal and LoginPortalApp
+COPY ../LoginPortal.sln ./
 COPY ./LoginPortalApp/LoginPortalApp.csproj ./LoginPortalApp/
 COPY ./LoginPortal/LoginPortal.csproj ./LoginPortal/
 
 # Restore dependencies
+<<<<<<< HEAD
 WORKDIR /src/LoginPortalApp
 RUN dotnet restore
 
@@ -24,8 +25,19 @@ COPY ./LoginPortalApp/. ./LoginPortalApp/
 
 # Build the project
 RUN dotnet build -c $BUILD_CONFIGURATION -o /app/build
+=======
+RUN dotnet restore "LoginPortalApp/LoginPortalApp.csproj"
 
-# Publish the service
+# Copy all source code for both projects
+COPY ./LoginPortal/ ./LoginPortal/
+COPY ./LoginPortalApp/ ./LoginPortalApp/
+
+# Build the LoginPortalApp project
+WORKDIR /src/LoginPortalApp
+RUN dotnet build "LoginPortalApp.csproj" -c $BUILD_CONFIGURATION -o /app/build
+>>>>>>> 6edac4fe61dcc281d2cf1816292c27b272d2e296
+
+# Publish the application
 FROM build AS publish
 RUN dotnet publish -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
@@ -34,5 +46,13 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
+<<<<<<< HEAD
 # Entry point to run the app
+=======
+# Expose the app
+EXPOSE 8080
+EXPOSE 8081
+
+# Set the entry point to run the app
+>>>>>>> 6edac4fe61dcc281d2cf1816292c27b272d2e296
 ENTRYPOINT ["dotnet", "LoginPortalApp.dll"]
