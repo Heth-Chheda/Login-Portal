@@ -14,6 +14,17 @@
   </ItemGroup>
 
   <ItemGroup>
+  <None Update="appsettings.json">
+    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    <ExcludeFromPublish>true</ExcludeFromPublish>
+  </None>
+  <None Update="appsettings.Development.json">
+    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    <ExcludeFromPublish>true</ExcludeFromPublish>
+  </None>
+</ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LoginPortal\LoginPortal.csproj" />
   </ItemGroup>
 
