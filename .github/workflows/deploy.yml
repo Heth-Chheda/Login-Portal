@@ -61,10 +61,8 @@ jobs:
           aws-region: ${{ secrets.AWS_ECR_REGION }}
 
       - name: Login to Amazon ECR
-        id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-        
       - name: Build and Push Backend Image
         run: |
           docker build -t login-portal-api-image:${{ env.TAG_VERSION }} -f ./LoginPortal/Dockerfile ./LoginPortal
@@ -84,15 +82,11 @@ jobs:
     env:
       TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
       REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
-      AWS_DEFAULT_REGION: ${{ secrets.AWS_ECR_REGION }}
     steps:
       - uses: actions/checkout@v3
       
       - name: Login to Amazon ECR
-        id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
-        env:
-          AWS_DEFAULT_REGION: ${{ env.AWS_DEFAULT_REGION }}
 
       - name: Retag and Push Docker Images
         run: |
@@ -116,18 +110,16 @@ jobs:
       - uses: actions/checkout@v3
       - name: Set permissions for private key
         run: |
-          echo "${{ secrets.EC2_SSH_KEY }}" > RportingKeyPair.pem
-          chmod 600 RportingKeyPair.pem
+          echo "${{ secrets.EC2_SSH_KEY }}" > KeyPair.pem
+          chmod 600 KeyPair.pem
       - name: Deploy to Dev Server
         run: |
-          ssh -v -o StrictHostKeyChecking=no -i RportingKeyPair.pem ec2-user@${{ secrets.EC2_DEV_IP }} '
-            sudo docker pull ${{ env.REGISTRY }}/login-portal-api-image:${{ env.TAG_VERSION }}
-            sudo docker pull ${{ env.REGISTRY }}/login-portal-app-image:${{ env.TAG_VERSION }}
-
-            sudo docker stop loginportal_dev || true
-            sudo docker rm loginportal_dev || true
-
-            sudo docker-compose -f /path/to/docker-compose.yml up -d
+          ssh -v -o StrictHostKeyChecking=no -i KeyPair.pem ec2-user@${{ secrets.EC2_DEV_IP }} '
+            aws ecr get-login-password --region ${{ secrets.AWS_ECR_REGION }} | docker login --username AWS --password-stdin ${{ env.REGISTRY }}
+            docker pull ${{ env.REGISTRY }}/login-portal-api-image:${{ env.TAG_VERSION }}
+            docker pull ${{ env.REGISTRY }}/login-portal-app-image:${{ env.TAG_VERSION }}
+            docker-compose -f /home/ec2-user/docker-compose.yml down
+            docker-compose -f /home/ec2-user/docker-compose.yml up -d
           '
 
   deploy_qa:
@@ -141,16 +133,14 @@ jobs:
       - uses: actions/checkout@v3
       - name: Set permissions for private key
         run: |
-          echo "${{ secrets.EC2_SSH_KEY }}" > RportingKeyPair.pem
-          chmod 600 RportingKeyPair.pem
+          echo "${{ secrets.EC2_SSH_KEY }}" > KeyPair.pem
+          chmod 600 KeyPair.pem
       - name: Deploy to QA Server
         run: |
-          ssh -v -o StrictHostKeyChecking=no -i RportingKeyPair.pem ec2-user@${{ secrets.EC2_QA_IP }} '
-            sudo docker pull ${{ env.REGISTRY }}/login-portal-api-image:${{ env.TAG_VERSION }}
-            sudo docker pull ${{ env.REGISTRY }}/login-portal-app-image:${{ env.TAG_VERSION }}
-
-            sudo docker stop loginportal_qa || true
-            sudo docker rm loginportal_qa || true
-
-            sudo docker-compose -f /path/to/docker-compose.yml up -d
+          ssh -v -o StrictHostKeyChecking=no -i KeyPair.pem ec2-user@${{ secrets.EC2_QA_IP }} '
+            aws ecr get-login-password --region ${{ secrets.AWS_ECR_REGION }} | docker login --username AWS --password-stdin ${{ env.REGISTRY }}
+            docker pull ${{ env.REGISTRY }}/login-portal-api-image:${{ env.TAG_VERSION }}
+            docker pull ${{ env.REGISTRY }}/login-portal-app-image:${{ env.TAG_VERSION }}
+            docker-compose -f /home/ec2-user/docker-compose.yml down
+            docker-compose -f /home/ec2-user/docker-compose.yml up -d
           '
