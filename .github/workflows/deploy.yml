@@ -66,13 +66,13 @@ jobs:
       - name: Build and Push Backend Image
         run: |
           docker build -t login-portal-api:${{ env.TAG_VERSION }} -f ./LoginPortal/Dockerfile ./LoginPortal
-          docker tag login-portal-api:${{ env.TAG_VERSION }} ${{ env.REGISTRY }}/login-portal:api-${{ env.TAG_VERSION }}
-          docker push ${{ env.REGISTRY }}/login-portal:api-${{ env.TAG_VERSION }}
+          docker tag login-portal-api:${{ env.TAG_VERSION }} ${{ env.REGISTRY }}:api-${{ env.TAG_VERSION }}
+          docker push ${{ env.REGISTRY }}:api-${{ env.TAG_VERSION }}
       - name: Build and Push Frontend Image
         run: |
           docker build -t login-portal-app:${{ env.TAG_VERSION }} -f ./LoginPortalApp/Dockerfile ./LoginPortalApp
-          docker tag login-portal-app:${{ env.TAG_VERSION }} ${{ env.REGISTRY }}/login-portal:app-${{ env.TAG_VERSION }}
-          docker push ${{ env.REGISTRY }}/login-portal:app-${{ env.TAG_VERSION }}
+          docker tag login-portal-app:${{ env.TAG_VERSION }} ${{ env.REGISTRY }}:app-${{ env.TAG_VERSION }}
+          docker push ${{ env.REGISTRY }}:app-${{ env.TAG_VERSION }}
 
   deploy_dev:
     needs: [build_and_push]
