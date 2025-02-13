@@ -1,38 +1,28 @@
-# Use the official image for ASP.NET Core runtime
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
-WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
-
-# Use the SDK to build the project
+# Base image for building the app
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
-ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copy the solution file and project file, then restore dependencies
+# Copy solution and projects
 COPY ./LoginPortal.sln ./
 COPY ./LoginPortal/LoginPortal.csproj ./LoginPortal/
-RUN dotnet restore "LoginPortal/LoginPortal.csproj"
+COPY ./LoginPortalApp/LoginPortalApp.csproj ./LoginPortalApp/
+COPY ./LoginPortal.Tests/LoginPortal.Tests.csproj ./LoginPortal.Tests/
 
-# Copy all source code
-COPY ./LoginPortal/ ./LoginPortal/
+# Restore dependencies
+RUN dotnet restore
 
-# Build the project
+# Copy remaining files and build the app
+COPY . .
+
+# Publish LoginPortal API
 WORKDIR /src/LoginPortal
-RUN dotnet build "LoginPortal.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet publish -c Release -o /app/publish
 
-# Publish the service
-FROM build AS publish
-RUN dotnet publish "LoginPortal.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
-
-# Final stage - Production
-FROM base AS final
+# Base image for running the app
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=build /app/publish .
 
-# Expose the app
-EXPOSE 8080
-EXPOSE 8081
-
-# Entry point to run the API
+# Expose port and run the app
+EXPOSE 80
 ENTRYPOINT ["dotnet", "LoginPortal.dll"]

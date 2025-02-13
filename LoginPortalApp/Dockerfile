@@ -15,28 +15,24 @@ COPY ./LoginPortalApp/LoginPortalApp.csproj ./LoginPortalApp/
 COPY ./LoginPortal/LoginPortal.csproj ./LoginPortal/
 
 # Restore dependencies
+WORKDIR /src/LoginPortalApp
 RUN dotnet restore
 
 # Copy all source code
-COPY ./LoginPortal/ ./LoginPortal/
-COPY ./LoginPortalApp/ ./LoginPortalApp/
+COPY ./LoginPortal/. ./LoginPortal/
+COPY ./LoginPortalApp/. ./LoginPortalApp/
 
 # Build the project
-WORKDIR /src/LoginPortalApp
-RUN dotnet build "LoginPortalApp.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build -c $BUILD_CONFIGURATION -o /app/build
 
 # Publish the service
 FROM build AS publish
-RUN dotnet publish "LoginPortalApp.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Final stage - Production
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-
-# Expose the app
-EXPOSE 8080
-EXPOSE 8081
 
 # Entry point to run the app
 ENTRYPOINT ["dotnet", "LoginPortalApp.dll"]

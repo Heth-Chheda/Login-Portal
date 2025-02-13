@@ -1,10 +1,8 @@
-# See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-# This stage is used when running from VS in fast mode (Default for Debug configuration)
+# Use the official image for ASP.NET Core runtime
 FROM mcr.microsoft.com/dotnet/runtime:9.0 AS base
 WORKDIR /app
 
-# This stage is used to build the service project
+# Use the SDK to build the project
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
@@ -16,26 +14,25 @@ COPY ./LoginPortalApp/LoginPortalApp.csproj ./LoginPortalApp/
 COPY ./LoginPortal/LoginPortal.csproj ./LoginPortal/
 
 # Restore dependencies
-RUN dotnet restore "./LoginPortal.Tests/LoginPortal.Tests.csproj"
+WORKDIR /src/LoginPortal.Tests
+RUN dotnet restore
 
 # Copy all source code
-COPY ./LoginPortal/ ./LoginPortal/
-COPY ./LoginPortalApp/ ./LoginPortalApp/
-COPY ./LoginPortal.Tests/ ./LoginPortal.Tests/
+COPY ./LoginPortal/. ./LoginPortal/
+COPY ./LoginPortalApp/. ./LoginPortalApp/
+COPY ./LoginPortal.Tests/. ./LoginPortal.Tests/
 
 # Build the test project
-WORKDIR /src/LoginPortal.Tests
-RUN dotnet build "./LoginPortal.Tests.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build -c $BUILD_CONFIGURATION -o /app/build
 
-# This stage is used to publish the service project to be copied to the final stage
+# Publish the test project
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./LoginPortal.Tests.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-# This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
+# Final stage - Running the tests
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
 # Entry point to run the tests
-ENTRYPOINT ["dotnet", "LoginPortal.Tests.dll"]
+ENTRYPOINT ["dotnet", "test", "LoginPortal.Tests.dll"]
