@@ -22,7 +22,6 @@ on:
           - prod
 
 jobs:
-
   tagify:
     name: Get Tag
     runs-on: ubuntu-latest
@@ -92,6 +91,7 @@ jobs:
     if: ${{ endsWith(needs.tagify.outputs.the_tag, 'dev') }}
     env:
       TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
+      REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
     steps:
       - uses: actions/checkout@v3
       - name: Set permissions for private key
@@ -101,18 +101,29 @@ jobs:
 
       - name: Deploy to Dev Server
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.EC2_DEV_IP }} '
+          ssh -v -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.EC2_DEV_IP }} '
             sudo docker pull ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}
             sudo docker stop loginportal_dev || true
             sudo docker rm loginportal_dev || true
             sudo docker run -d --name loginportal_dev -p 8050:80 ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}'
-      
+        continue-on-error: true
+        
+      - name: Retry with ec2-user
+        if: ${{ failure() }}
+        run: |
+          ssh -v -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_DEV_IP }} '
+            sudo docker pull ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}
+            sudo docker stop loginportal_dev || true
+            sudo docker rm loginportal_dev || true
+            sudo docker run -d --name loginportal_dev -p 8050:80 ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}'
+
   deploy_qa:
     needs: [tagify]
     runs-on: ubuntu-latest
     if: ${{ endsWith(needs.tagify.outputs.the_tag, 'qa') }}
     env:
       TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
+      REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
     steps:
       - uses: actions/checkout@v3
       - name: Set permissions for private key
@@ -122,50 +133,18 @@ jobs:
 
       - name: Deploy to QA Server
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.EC2_QA_IP }} '
+          ssh -v -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.EC2_QA_IP }} '
             sudo docker pull ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}
             sudo docker stop loginportal_qa || true
             sudo docker rm loginportal_qa || true
             sudo docker run -d --name loginportal_qa -p 8051:80 ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}'
+        continue-on-error: true
 
-  deploy_stage:
-    needs: [tagify, retag_image]
-    runs-on: ubuntu-latest
-    if: ${{ endsWith(needs.tagify.outputs.the_tag, 'stage') }}
-    env:
-      TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set permissions for private key
+      - name: Retry with ec2-user
+        if: ${{ failure() }}
         run: |
-          echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
-          chmod 600 key.pem
-
-      - name: Deploy to Stage Server
-        run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.EC2_STAGE_IP }} '
+          ssh -v -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_QA_IP }} '
             sudo docker pull ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}
-            sudo docker stop loginportal_stage || true
-            sudo docker rm loginportal_stage || true
-            sudo docker run -d --name loginportal_stage -p 8052:80 ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}'
-
-  deploy_prod:
-    needs: [tagify, retag_image]
-    runs-on: ubuntu-latest
-    if: ${{ endsWith(needs.tagify.outputs.the_tag, 'prod') }}
-    env:
-      TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set permissions for private key
-        run: |
-          echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
-          chmod 600 key.pem
-
-      - name: Deploy to Production Server
-        run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.EC2_PROD_IP }} '
-            sudo docker pull ${{ env.REGISTRY }}/loginportal_api:latest
-            sudo docker stop loginportal_prod || true
-            sudo docker rm loginportal_prod || true
-            sudo docker run -d --name loginportal_prod -p 8053:80 ${{ env.REGISTRY }}/loginportal_api:latest'
+            sudo docker stop loginportal_qa || true
+            sudo docker rm loginportal_qa || true
+            sudo docker run -d --name loginportal_qa -p 8051:80 ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}'
