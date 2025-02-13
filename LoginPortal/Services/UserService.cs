@@ -11,7 +11,7 @@ namespace LoginPortal.Services
     public class UserService : IUserService
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser>? _userManager;
 
         // Default constructor
         public UserService()

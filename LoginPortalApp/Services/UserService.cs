@@ -14,7 +14,7 @@ namespace LoginPortalApp.Services
     public class UserService
     {
         private readonly HttpClient _client;
-        private readonly ApplicationDbContext _dbContext;
+        private readonly ApplicationDbContext? _dbContext;
         private readonly LoginPortal.Services.IUserService _userService;
         private readonly TokenService _tokenService;
 
