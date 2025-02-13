@@ -13,14 +13,12 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
-  <ItemGroup>
+<ItemGroup>
   <None Update="appsettings.json">
-    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    <ExcludeFromPublish>true</ExcludeFromPublish>
+    <CopyToPublishDirectory>Never</CopyToPublishDirectory>
   </None>
   <None Update="appsettings.Development.json">
-    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    <ExcludeFromPublish>true</ExcludeFromPublish>
+    <CopyToPublishDirectory>Never</CopyToPublishDirectory>
   </None>
 </ItemGroup>
 
