@@ -9,17 +9,19 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copy solution file and project files for LoginPortal and LoginPortalApp
+# Copy solution file
 COPY ../LoginPortal.sln ./
-COPY ./LoginPortalApp/LoginPortalApp.csproj ./LoginPortalApp/
-COPY ./LoginPortal/LoginPortal.csproj ./LoginPortal/
+
+# Copy project files
+COPY ../LoginPortalApp/LoginPortalApp.csproj ./LoginPortalApp/
+COPY ../LoginPortal/LoginPortal.csproj ./LoginPortal/
 
 # Restore dependencies
 RUN dotnet restore "LoginPortalApp/LoginPortalApp.csproj"
 
 # Copy all source code for both projects
-COPY ./LoginPortal/ ./LoginPortal/
-COPY ./LoginPortalApp/ ./LoginPortalApp/
+COPY ../LoginPortal/ ./LoginPortal/
+COPY ../LoginPortalApp/ ./LoginPortalApp/
 
 # Build the LoginPortalApp project
 WORKDIR /src/LoginPortalApp
@@ -33,10 +35,6 @@ RUN dotnet publish "LoginPortalApp.csproj" -c $BUILD_CONFIGURATION -o /app/publi
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-
-# Expose the app
-EXPOSE 8080
-EXPOSE 8081
 
 # Set the entry point to run the app
 ENTRYPOINT ["dotnet", "LoginPortalApp.dll"]

@@ -1,0 +1,28 @@
+﻿<Properties>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../LoginPortalApp/Services/UserService.cs">
+    <Files>
+      <File FileName="Services/UserService.cs" Line="14" Column="55" />
+      <File FileName="../LoginPortalApp/Services/UserService.cs" Line="16" Column="36" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="LoginPortal">
+            <Node name="LoginPortal">
+              <Node name="Services" expanded="True" />
+            </Node>
+            <Node name="LoginPortalApp" expanded="True">
+              <Node name="Services" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
