@@ -14,7 +14,6 @@ COPY ../ ./
 
 # Restore dependencies
 WORKDIR /src/LoginPortalApp
-RUN dotnet restore
 
 # Build the LoginPortalApp project
 RUN dotnet build "LoginPortalApp.csproj" -c $BUILD_CONFIGURATION -o /app/build
