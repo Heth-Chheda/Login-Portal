@@ -68,46 +68,20 @@ jobs:
           docker build -t login-portal-api-image:${{ env.TAG_VERSION }} -f ./LoginPortal/Dockerfile ./LoginPortal
           docker tag login-portal-api-image:${{ env.TAG_VERSION }} ${{ env.REGISTRY }}/login-portal-api-image:${{ env.TAG_VERSION }}
           docker push ${{ env.REGISTRY }}/login-portal-api-image:${{ env.TAG_VERSION }}
-
       - name: Build and Push Frontend Image
         run: |
           docker build -t login-portal-app-image:${{ env.TAG_VERSION }} -f ./LoginPortalApp/Dockerfile ./LoginPortalApp
           docker tag login-portal-app-image:${{ env.TAG_VERSION }} ${{ env.REGISTRY }}/login-portal-app-image:${{ env.TAG_VERSION }}
           docker push ${{ env.REGISTRY }}/login-portal-app-image:${{ env.TAG_VERSION }}
 
-  retag_image:
-    needs: [build_and_push]
-    runs-on: ubuntu-latest
-    if: ${{ endsWith(needs.tagify.outputs.the_tag, 'stage') || endsWith(needs.tagify.outputs.the_tag, 'prod') }}
-    env:
-      TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
-      REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
-    steps:
-      - uses: actions/checkout@v3
-      
-      - name: Login to Amazon ECR
-        uses: aws-actions/amazon-ecr-login@v2
-
-      - name: Retag and Push Docker Images
-        run: |
-          COMPONENTS=("login-portal-api-image" "login-portal-app-image")
-          for COMPONENT in "${COMPONENTS[@]}"; do
-            FULL_TAG=$REGISTRY/$COMPONENT:${{ env.TAG_VERSION }}
-            LATEST_TAG=$REGISTRY/$COMPONENT:latest
-            docker pull $FULL_TAG
-            docker tag $FULL_TAG $LATEST_TAG
-            docker push $LATEST_TAG
-          done
-
   deploy_dev:
-    needs: [tagify]
+    needs: [build_and_push]
     runs-on: ubuntu-latest
     if: ${{ endsWith(needs.tagify.outputs.the_tag, 'dev') }}
     env:
       TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
       REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
     steps:
-      - uses: actions/checkout@v3
       - name: Set permissions for private key
         run: |
           echo "${{ secrets.EC2_SSH_KEY }}" > KeyPair.pem
@@ -123,14 +97,13 @@ jobs:
           '
 
   deploy_qa:
-    needs: [tagify]
+    needs: [build_and_push]
     runs-on: ubuntu-latest
     if: ${{ endsWith(needs.tagify.outputs.the_tag, 'qa') }}
     env:
       TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
       REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
     steps:
-      - uses: actions/checkout@v3
       - name: Set permissions for private key
         run: |
           echo "${{ secrets.EC2_SSH_KEY }}" > KeyPair.pem
