@@ -13,14 +13,10 @@ COPY ./LoginPortal.sln ./
 COPY ./LoginPortal/*.csproj ./LoginPortal/
 COPY ./LoginPortalApp/*.csproj ./LoginPortalApp/
 
-# Restore dependencies for all projects
-WORKDIR /src/LoginPortal
-RUN dotnet restore
+# Restore dependencies for the entire solution
+RUN dotnet restore LoginPortal.sln
 
-WORKDIR /src/LoginPortalApp
-RUN dotnet restore
-
-# Copy all source code and build the project
+# Copy all source code and build the UI project
 COPY . .
 WORKDIR /src/LoginPortalApp
 RUN dotnet build LoginPortalApp.csproj -c $BUILD_CONFIGURATION -o /app/build
