@@ -10,14 +10,14 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 # Copy the solution file
-COPY ../LoginPortal.sln ./
+COPY LoginPortal.sln ./
 
 # Copy the project file and restore dependencies
-COPY ./LoginPortalApp/LoginPortalApp.csproj ./LoginPortalApp/
+COPY LoginPortalApp/LoginPortalApp.csproj ./LoginPortalApp/
 RUN dotnet restore ./LoginPortalApp/LoginPortalApp.csproj
 
 # Copy all source code
-COPY ./LoginPortalApp ./LoginPortalApp/
+COPY LoginPortalApp ./LoginPortalApp/
 
 # Build the project
 WORKDIR /src/LoginPortalApp
@@ -38,3 +38,4 @@ EXPOSE 8081
 
 # Entry point to run the app
 ENTRYPOINT ["dotnet", "LoginPortalApp.dll"]
+
