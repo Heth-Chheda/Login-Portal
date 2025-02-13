@@ -23,11 +23,11 @@ RUN dotnet restore
 # Copy all source code and build the project
 COPY . .
 WORKDIR /src/LoginPortalApp
-RUN dotnet build -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build LoginPortalApp.csproj -c $BUILD_CONFIGURATION -o /app/build
 
 # Publish the service
 FROM build AS publish
-RUN dotnet publish -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish LoginPortalApp.csproj -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Final stage - Production
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
