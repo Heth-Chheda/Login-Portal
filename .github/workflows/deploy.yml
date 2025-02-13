@@ -70,7 +70,7 @@ jobs:
           docker push ${{ env.REGISTRY }}:api-${{ env.TAG_VERSION }}
       - name: Build and Push Frontend Image
         run: |
-          docker build -t login-portal-app:${{ env.TAG_VERSION }} -f ./LoginPortalApp/Dockerfile ./LoginPortalApp
+          docker build -t login-portal-app:${{ env.TAG_VERSION }} -f ../LoginPortalApp/Dockerfile ./LoginPortalApp
           docker tag login-portal-app:${{ env.TAG_VERSION }} ${{ env.REGISTRY }}:app-${{ env.TAG_VERSION }}
           docker push ${{ env.REGISTRY }}:app-${{ env.TAG_VERSION }}
 
