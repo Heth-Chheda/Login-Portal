@@ -9,23 +9,34 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copy the entire solution for access to all projects
-COPY ../ ./
+# Copy the solution file and project file, then restore dependencies
+COPY ../LoginPortal.sln ./                
+# Go up one level to access the solution file
+COPY ./LoginPortalApp.csproj ./LoginPortalApp/  
+# Copy project file from current folder
 
-# Restore dependencies
+
+# Copy all source code
+COPY . ./LoginPortalApp/                    
+# Copy the rest of the source code
+
+# Build the project
 WORKDIR /src/LoginPortalApp
-
-# Build the LoginPortalApp project
 RUN dotnet build "LoginPortalApp.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-# Publish the application
+# Publish the service
 FROM build AS publish
 RUN dotnet publish "LoginPortalApp.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
+
 # Final stage - Production
-FROM base AS final
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-# Set the entry point to run the app
+# Expose the app on the required ports
+EXPOSE 8080
+EXPOSE 8081
+
+# Entry point to run the API
 ENTRYPOINT ["dotnet", "LoginPortalApp.dll"]
