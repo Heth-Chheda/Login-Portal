@@ -63,16 +63,10 @@ jobs:
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build and Push Backend Image
+      - name: Build and Push Images with Docker Compose
         run: |
-          docker build -t login-portal-api:${{ env.TAG_VERSION }} -f ./LoginPortal/Dockerfile ./LoginPortal
-          docker tag login-portal-api:${{ env.TAG_VERSION }} ${{ env.REGISTRY }}:api-${{ env.TAG_VERSION }}
-          docker push ${{ env.REGISTRY }}:api-${{ env.TAG_VERSION }}
-      - name: Build and Push Frontend Image
-        run: |
-          docker build -t login-portal-app:${{ env.TAG_VERSION }} -f ./LoginPortalApp/Dockerfile ./
-          docker tag login-portal-app:${{ env.TAG_VERSION }} ${{ env.REGISTRY }}:app-${{ env.TAG_VERSION }}
-          docker push ${{ env.REGISTRY }}:app-${{ env.TAG_VERSION }}
+          docker-compose build
+          docker-compose push
 
   deploy_dev:
     needs: [build_and_push]
@@ -90,8 +84,7 @@ jobs:
         run: |
           ssh -v -o StrictHostKeyChecking=no -i KeyPair.pem ec2-user@${{ secrets.EC2_DEV_IP }} '
             aws ecr get-login-password --region ${{ secrets.AWS_ECR_REGION }} | docker login --username AWS --password-stdin ${{ env.REGISTRY }}
-            docker pull ${{ env.REGISTRY }}/login-portal-api-image:${{ env.TAG_VERSION }}
-            docker pull ${{ env.REGISTRY }}/login-portal-app-image:${{ env.TAG_VERSION }}
+            docker-compose -f /home/ec2-user/docker-compose.yml pull
             docker-compose -f /home/ec2-user/docker-compose.yml down
             docker-compose -f /home/ec2-user/docker-compose.yml up -d
           '
@@ -112,8 +105,7 @@ jobs:
         run: |
           ssh -v -o StrictHostKeyChecking=no -i KeyPair.pem ec2-user@${{ secrets.EC2_QA_IP }} '
             aws ecr get-login-password --region ${{ secrets.AWS_ECR_REGION }} | docker login --username AWS --password-stdin ${{ env.REGISTRY }}
-            docker pull ${{ env.REGISTRY }}/login-portal-api-image:${{ env.TAG_VERSION }}
-            docker pull ${{ env.REGISTRY }}/login-portal-app-image:${{ env.TAG_VERSION }}
+            docker-compose -f /home/ec2-user/docker-compose.yml pull
             docker-compose -f /home/ec2-user/docker-compose.yml down
             docker-compose -f /home/ec2-user/docker-compose.yml up -d
           '
