@@ -62,9 +62,9 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-         aws-region: ${{ secrets.AWS_ECR_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_ECR_REGION }}
          
       - name: Login to Amazon ECR
         run: |
@@ -91,6 +91,12 @@ jobs:
       - name: Deploy to Dev Server
         run: |
           ssh -v -o StrictHostKeyChecking=no -i KeyPair.pem ec2-user@${{ secrets.EC2_DEV_IP }} '
+            # Install docker-compose if not already installed
+            if ! command -v docker-compose &>/dev/null; then
+              echo "docker-compose not found. Installing..."
+              sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose &&
+              sudo chmod +x /usr/local/bin/docker-compose
+            fi
             aws ecr get-login-password --region ${{ secrets.AWS_ECR_REGION }} | docker login --username AWS --password-stdin ${{ env.REGISTRY }}
             docker-compose -f /home/ec2-user/docker-compose.yml pull
             docker-compose -f /home/ec2-user/docker-compose.yml down
@@ -112,6 +118,12 @@ jobs:
       - name: Deploy to QA Server
         run: |
           ssh -v -o StrictHostKeyChecking=no -i KeyPair.pem ec2-user@${{ secrets.EC2_QA_IP }} '
+            # Install docker-compose if not already installed
+            if ! command -v docker-compose &>/dev/null; then
+              echo "docker-compose not found. Installing..."
+              sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose &&
+              sudo chmod +x /usr/local/bin/docker-compose
+            fi
             aws ecr get-login-password --region ${{ secrets.AWS_ECR_REGION }} | docker login --username AWS --password-stdin ${{ env.REGISTRY }}
             docker-compose -f /home/ec2-user/docker-compose.yml pull
             docker-compose -f /home/ec2-user/docker-compose.yml down
