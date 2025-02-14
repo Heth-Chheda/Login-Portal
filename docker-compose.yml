@@ -1,6 +1,6 @@
 services:
   loginportalapp:
-    image: login-portal-app-image:latest
+    image: ${REGISTRY}/login-portal-app-image:${TAG_VERSION}
     build:
       context: ./LoginPortal
       dockerfile: Dockerfile
@@ -47,7 +47,7 @@ services:
       retries: 10
 
   loginportal:
-    image: login-portal-api-image:latest
+    image: ${REGISTRY}/login-portal-api-image:${TAG_VERSION}
     build:
       context: ./LoginPortal
       dockerfile: Dockerfile
