@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   loginportalapp:
     image: login-portal-app-image:latest
