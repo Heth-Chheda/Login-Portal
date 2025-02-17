@@ -73,12 +73,13 @@ jobs:
           aws ecr get-login-password --region ${{ secrets.AWS_ECR_REGION }} | \
           docker login --username AWS --password-stdin ${{ env.REGISTRY }}
 
-      - name: Push Docker Images
+      - name: Build and Push Docker Images
         run: |
+          docker-compose build
           docker-compose push
 
   deploy_dev:
-    needs: [tagify, build_and_push]
+    needs: [build_and_push]
     runs-on: ubuntu-latest
     if: ${{ endsWith(needs.tagify.outputs.the_tag, 'dev') }}
     env:
@@ -101,7 +102,7 @@ jobs:
           '
 
   deploy_qa:
-    needs: [tagify, build_and_push]
+    needs: [build_and_push]
     runs-on: ubuntu-latest
     if: ${{ endsWith(needs.tagify.outputs.the_tag, 'qa') }}
     env:
@@ -124,7 +125,7 @@ jobs:
           '
 
   deploy_stage:
-    needs: [tagify, build_and_push]
+    needs: [build_and_push]
     runs-on: ubuntu-latest
     if: ${{ endsWith(needs.tagify.outputs.the_tag, 'stage') }}
     env:
@@ -145,7 +146,7 @@ jobs:
           '
 
   deploy_prod:
-    needs: [tagify, build_and_push]
+    needs: [build_and_push]
     runs-on: ubuntu-latest
     if: ${{ endsWith(needs.tagify.outputs.the_tag, 'prod') }}
     env:
