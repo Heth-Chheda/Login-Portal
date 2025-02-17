@@ -34,10 +34,12 @@ jobs:
           full_tag=${GITHUB_REF#refs/*/}
           deploy_tag=${full_tag: 0:-7}
           echo "VERSION=${deploy_tag}" >> "$GITHUB_ENV" 
+
       - name: Manual Input
         if: ${{ github.event_name == 'workflow_dispatch' }}
         run: |
           echo "VERSION=${{ github.event.inputs.deploy_version }}-${{ github.event.inputs.deploy_environment }}" >> "$GITHUB_ENV" 
+
       - name: Output VAR
         id: deploy_tag
         run: |
@@ -88,19 +90,36 @@ jobs:
         run: |
           echo "${{ secrets.EC2_SSH_KEY }}" > KeyPair.pem
           chmod 600 KeyPair.pem
+        
       - name: Deploy to Dev Server
         run: |
           ssh -v -o StrictHostKeyChecking=no -i KeyPair.pem ec2-user@${{ secrets.EC2_DEV_IP }} '
-            # Install docker-compose if not already installed
-            if ! command -v docker-compose &>/dev/null; then
-              echo "docker-compose not found. Installing..."
-              sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose &&
-              sudo chmod +x /usr/local/bin/docker-compose
-            fi
+            # Login to ECR
             aws ecr get-login-password --region ${{ secrets.AWS_ECR_REGION }} | docker login --username AWS --password-stdin ${{ env.REGISTRY }}
-            docker-compose -f /home/ec2-user/docker-compose.yml pull
-            docker-compose -f /home/ec2-user/docker-compose.yml down
-            docker-compose -f /home/ec2-user/docker-compose.yml up -d
+
+            # Pull the latest images with the specified format
+            docker pull ${REGISTRY}:app-${TAG_VERSION}
+            docker pull ${REGISTRY}:api-${TAG_VERSION}
+
+            # Stop and remove existing containers
+            docker ps -q --filter "name=loginportalapp" | xargs -r docker stop | xargs -r docker rm
+            docker ps -q --filter "name=loginportalapi" | xargs -r docker stop | xargs -r docker rm
+
+            # Remove old images to save space (optional)
+            docker image prune -f
+
+            # Start new containers with the pulled images
+            docker run -d \
+              --name loginportalapp \
+              --restart always \
+              -p 8081:8080 \
+              ${REGISTRY}:app-${TAG_VERSION}
+
+            docker run -d \
+              --name loginportalapi \
+              --restart always \
+              -p 8080:8080 \
+              ${REGISTRY}:api-${TAG_VERSION}
           '
 
   deploy_qa:
@@ -115,17 +134,34 @@ jobs:
         run: |
           echo "${{ secrets.EC2_SSH_KEY }}" > KeyPair.pem
           chmod 600 KeyPair.pem
+          
       - name: Deploy to QA Server
         run: |
           ssh -v -o StrictHostKeyChecking=no -i KeyPair.pem ec2-user@${{ secrets.EC2_QA_IP }} '
-            # Install docker-compose if not already installed
-            if ! command -v docker-compose &>/dev/null; then
-              echo "docker-compose not found. Installing..."
-              sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose &&
-              sudo chmod +x /usr/local/bin/docker-compose
-            fi
+            # Login to ECR
             aws ecr get-login-password --region ${{ secrets.AWS_ECR_REGION }} | docker login --username AWS --password-stdin ${{ env.REGISTRY }}
-            docker-compose -f /home/ec2-user/docker-compose.yml pull
-            docker-compose -f /home/ec2-user/docker-compose.yml down
-            docker-compose -f /home/ec2-user/docker-compose.yml up -d
+
+            # Pull the latest images with the specified format
+            docker pull ${REGISTRY}:app-${TAG_VERSION}
+            docker pull ${REGISTRY}:api-${TAG_VERSION}
+
+            # Stop and remove existing containers
+            docker ps -q --filter "name=loginportalapp" | xargs -r docker stop | xargs -r docker rm
+            docker ps -q --filter "name=loginportalapi" | xargs -r docker stop | xargs -r docker rm
+
+            # Remove old images to save space (optional)
+            docker image prune -f
+
+            # Start new containers with the pulled images
+            docker run -d \
+              --name loginportalapp \
+              --restart always \
+              -p 8081:8080 \
+              ${REGISTRY}:app-${TAG_VERSION}
+
+            docker run -d \
+              --name loginportalapi \
+              --restart always \
+              -p 8080:8080 \
+              ${REGISTRY}:api-${TAG_VERSION}
           '
