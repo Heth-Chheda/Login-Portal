@@ -73,13 +73,12 @@ jobs:
           aws ecr get-login-password --region ${{ secrets.AWS_ECR_REGION }} | \
           docker login --username AWS --password-stdin ${{ env.REGISTRY }}
 
-      - name: Build and Push Docker Images
+      - name: Push Docker Images
         run: |
-          docker-compose build
           docker-compose push
 
   deploy_dev:
-    needs: [build_and_push]
+    needs: [tagify, build_and_push]
     runs-on: ubuntu-latest
     if: ${{ endsWith(needs.tagify.outputs.the_tag, 'dev') }}
     env:
@@ -94,36 +93,15 @@ jobs:
       - name: Deploy to Dev Server
         run: |
           ssh -v -o StrictHostKeyChecking=no -i KeyPair.pem ec2-user@${{ secrets.EC2_DEV_IP }} '
-            # Login to ECR
             aws ecr get-login-password --region ${{ secrets.AWS_ECR_REGION }} | docker login --username AWS --password-stdin ${{ env.REGISTRY }}
-
-            # Pull the latest images with the specified format
             docker pull ${REGISTRY}:app-${TAG_VERSION}
             docker pull ${REGISTRY}:api-${TAG_VERSION}
-
-            # Stop and remove existing containers
-            docker ps -q --filter "name=loginportalapp" | xargs -r docker stop | xargs -r docker rm
-            docker ps -q --filter "name=loginportalapi" | xargs -r docker stop | xargs -r docker rm
-
-            # Remove old images to save space (optional)
-            docker image prune -f
-
-            # Start new containers with the pulled images
-            docker run -d \
-              --name loginportalapp \
-              --restart always \
-              -p 8081:8080 \
-              ${REGISTRY}:app-${TAG_VERSION}
-
-            docker run -d \
-              --name loginportalapi \
-              --restart always \
-              -p 8080:8080 \
-              ${REGISTRY}:api-${TAG_VERSION}
+            docker-compose down
+            docker-compose up -d
           '
 
   deploy_qa:
-    needs: [build_and_push]
+    needs: [tagify, build_and_push]
     runs-on: ubuntu-latest
     if: ${{ endsWith(needs.tagify.outputs.the_tag, 'qa') }}
     env:
@@ -138,30 +116,51 @@ jobs:
       - name: Deploy to QA Server
         run: |
           ssh -v -o StrictHostKeyChecking=no -i KeyPair.pem ec2-user@${{ secrets.EC2_QA_IP }} '
-            # Login to ECR
             aws ecr get-login-password --region ${{ secrets.AWS_ECR_REGION }} | docker login --username AWS --password-stdin ${{ env.REGISTRY }}
-
-            # Pull the latest images with the specified format
             docker pull ${REGISTRY}:app-${TAG_VERSION}
             docker pull ${REGISTRY}:api-${TAG_VERSION}
+            docker-compose down
+            docker-compose up -d
+          '
 
-            # Stop and remove existing containers
-            docker ps -q --filter "name=loginportalapp" | xargs -r docker stop | xargs -r docker rm
-            docker ps -q --filter "name=loginportalapi" | xargs -r docker stop | xargs -r docker rm
+  deploy_stage:
+    needs: [tagify, build_and_push]
+    runs-on: ubuntu-latest
+    if: ${{ endsWith(needs.tagify.outputs.the_tag, 'stage') }}
+    env:
+      TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
+      REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
+    steps:
+      - name: Set permissions for private key
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
+          chmod 600 key.pem
 
-            # Remove old images to save space (optional)
-            docker image prune -f
+      - name: Deploy to Stage Server
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.EC2_STAGE_IP }} '
+            sudo docker pull ${{ env.REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}
+            sudo docker-compose down
+            sudo docker-compose up -d
+          '
 
-            # Start new containers with the pulled images
-            docker run -d \
-              --name loginportalapp \
-              --restart always \
-              -p 8081:8080 \
-              ${REGISTRY}:app-${TAG_VERSION}
+  deploy_prod:
+    needs: [tagify, build_and_push]
+    runs-on: ubuntu-latest
+    if: ${{ endsWith(needs.tagify.outputs.the_tag, 'prod') }}
+    env:
+      TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
+      REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
+    steps:
+      - name: Set permissions for private key
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
+          chmod 600 key.pem
 
-            docker run -d \
-              --name loginportalapi \
-              --restart always \
-              -p 8080:8080 \
-              ${REGISTRY}:api-${TAG_VERSION}
+      - name: Deploy to Production Server
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.EC2_PROD_IP }} '
+            sudo docker pull ${{ env.REGISTRY }}/loginportal_api:latest
+            sudo docker-compose down
+            sudo docker-compose up -d
           '
