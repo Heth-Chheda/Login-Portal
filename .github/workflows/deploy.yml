@@ -34,9 +34,12 @@ jobs:
       - name: Get Tag
         id: latest_tag
         run: |
-          echo GHR $GITHUB_REF
-          echo GHR_eval ${GITHUB_REF#refs/*/}
           echo "TAG_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+      - name: Extract Version Number
+        id: version
+        run: |
+          VERSION=$(echo "${GITHUB_REF#refs/tags/v}" | sed 's/-.*//')
+          echo "VERSION_NUMBER=$VERSION" >> $GITHUB_OUTPUT
 
 
   build_and_push:
