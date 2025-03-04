@@ -75,7 +75,7 @@ jobs:
   deploy_dev:
     needs: [build_and_push]
     runs-on: ubuntu-latest
-    if: ${{ endsWith(needs.tagify.outputs.the_tag, 'dev') }}
+    if: ${{ endsWith(needs.tagify.outputs.the_tag, 'dev-deploy') }}
     env:
       TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
       REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
@@ -100,7 +100,7 @@ jobs:
   deploy_qa:
     needs: [build_and_push]
     runs-on: ubuntu-latest
-    if: ${{ endsWith(needs.tagify.outputs.the_tag, 'qa') }}
+    if: ${{ endsWith(needs.tagify.outputs.the_tag, 'qa-deploy') }}
     env:
       TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
       REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
@@ -123,7 +123,7 @@ jobs:
   deploy_stage:
     needs: [build_and_push]
     runs-on: ubuntu-latest
-    if: ${{ endsWith(needs.tagify.outputs.the_tag, 'stage') }}
+    if: ${{ endsWith(needs.tagify.outputs.the_tag, 'stage-deploy') }}
     env:
       TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
       REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
@@ -144,7 +144,7 @@ jobs:
   deploy_prod:
     needs: [build_and_push]
     runs-on: ubuntu-latest
-    if: ${{ endsWith(needs.tagify.outputs.the_tag, 'prod') }}
+    if: ${{ endsWith(needs.tagify.outputs.the_tag, 'prod-deploy') }}
     env:
       TAG_VERSION: ${{ needs.tagify.outputs.the_tag }}
       REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
