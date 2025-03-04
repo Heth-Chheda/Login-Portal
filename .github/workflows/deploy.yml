@@ -92,8 +92,8 @@ jobs:
         run: |
           ssh -v -o StrictHostKeyChecking=no -i KeyPair.pem ec2-user@${{ secrets.EC2_DEV_IP }} '
             aws ecr get-login-password --region ${{ secrets.AWS_ECR_REGION }} | docker login --username AWS --password-stdin ${{ env.REGISTRY }}
-            docker pull ${{secrets.AWS_ECR_REGISTRY}}:app-${TAG_VERSION}
-            docker pull ${{secrets.AWS_ECR_REGISTRY}}:api-${TAG_VERSION}
+            docker pull ${{secrets.AWS_ECR_REGISTRY}}:app-${{env.TAG_VERSION}}
+            docker pull ${{secrets.AWS_ECR_REGISTRY}}:api-${{env.TAG_VERSION}}
             echo "REGISTRY=${{secrets.AWS_ECR_REGISTRY}}"
             echo "TAG_VERSION=${TAG_VERSION}"
             docker-compose down
@@ -117,8 +117,8 @@ jobs:
         run: |
           ssh -v -o StrictHostKeyChecking=no -i KeyPair.pem ec2-user@${{ secrets.EC2_QA_IP }} '
             aws ecr get-login-password --region ${{ secrets.AWS_ECR_REGION }} | docker login --username AWS --password-stdin ${{ env.REGISTRY }}
-            docker pull ${REGISTRY}:app-${TAG_VERSION}
-            docker pull ${REGISTRY}:api-${TAG_VERSION}
+            docker pull ${REGISTRY}:app-${{env.TAG_VERSION}}
+            docker pull ${REGISTRY}:api-${{env.TAG_VERSION}}
             docker-compose down
             docker-compose up -d
           '
