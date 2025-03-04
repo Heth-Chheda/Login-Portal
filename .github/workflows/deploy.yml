@@ -92,9 +92,9 @@ jobs:
         run: |
           ssh -v -o StrictHostKeyChecking=no -i KeyPair.pem ec2-user@${{ secrets.EC2_DEV_IP }} '
             aws ecr get-login-password --region ${{ secrets.AWS_ECR_REGION }} | docker login --username AWS --password-stdin ${{ env.REGISTRY }}
-            docker pull ${{secrets.AWS_ECR_REGISTRY}}:app-${{env.TAG_VERSION}}
-            docker pull ${{secrets.AWS_ECR_REGISTRY}}:api-${{env.TAG_VERSION}}
-            echo "REGISTRY=${{secrets.AWS_ECR_REGISTRY}}"
+            docker pull ${{env.REGISTRY}}:app-${{env.TAG_VERSION}}
+            docker pull ${{env.REGISTRY}}:api-${{env.TAG_VERSION}}
+            echo "REGISTRY=${{env.REGISTRY}}"
             echo "TAG_VERSION=${{env.TAG_VERSION}}"     
 
           # Create the network if it does not exist
@@ -120,7 +120,7 @@ jobs:
             --network login-portal-networks \
             -e ASPNETCORE_ENVIRONMENT=Development \
             -e ConnectionStrings__DefaultConnection="Server=sqlserver,1433;Database=user_management_db;User Id=admin;Password=admin123;TrustServerCertificate=True" \
-            ${{ secrets.AWS_ECR_REGISTRY }}:api-${{ env.TAG_VERSION }}
+            ${{ env.REGISTRY }}:api-${{ env.TAG_VERSION }}
 
           # Start Login Portal App
           docker run -d --name login-portal-app -p 8081:8080 \
@@ -128,7 +128,7 @@ jobs:
           -e ASPNETCORE_ENVIRONMENT=Development \
           -e API_URL="http://loginportal:8080" \
           -e ConnectionStrings__DefaultConnection="Server=sqlserver,1433;Database=user_management_db;User Id=admin;Password=admin123;TrustServerCertificate=True" \
-          ${{ secrets.AWS_ECR_REGISTRY }}:app-${{ env.TAG_VERSION }}
+          ${{ env.REGISTRY }}:app-${{ env.TAG_VERSION }}
           '
 
   deploy_qa:
@@ -148,11 +148,45 @@ jobs:
         run: |
           ssh -v -o StrictHostKeyChecking=no -i KeyPair.pem ec2-user@${{ secrets.EC2_QA_IP }} '
             aws ecr get-login-password --region ${{ secrets.AWS_ECR_REGION }} | docker login --username AWS --password-stdin ${{ env.REGISTRY }}
-            docker pull ${REGISTRY}:app-${{env.TAG_VERSION}}
-            docker pull ${REGISTRY}:api-${{env.TAG_VERSION}}
-            docker-compose down
-            docker-compose up -d
+            docker pull ${{env.REGISTRY}}:app-${{env.TAG_VERSION}}
+            docker pull ${{env.REGISTRY}}:api-${{env.TAG_VERSION}}
+            echo "REGISTRY=${{env.REGISTRY}}"
+            echo "TAG_VERSION=${{env.TAG_VERSION}}"     
+
+          # Create the network if it does not exist
+          docker network inspect login-portal-networks >/dev/null 2>&1 || docker network create login-portal-networks
+
+
+          # Stop and remove existing containers if they exist
+          docker stop login-portal-api || true
+          docker rm login-portal-api || true
+          docker stop login-portal-app || true
+          docker rm login-portal-app || true
+          docker stop sqlserver-container || true
+          docker rm sqlserver-container || true
+
+          # Start SQL Server
+          docker run -d --name sqlserver-container -p 1433:1433 \
+            -e ACCEPT_EULA=Y -e SA_PASSWORD=admin123 \
+            --network login-portal-networks \
+            mcr.microsoft.com/mssql/server:2019-latest
+
+          # Start Login Portal API
+          docker run -d --name login-portal-api -p 8080:8080 \
+            --network login-portal-networks \
+            -e ASPNETCORE_ENVIRONMENT=Development \
+            -e ConnectionStrings__DefaultConnection="Server=sqlserver,1433;Database=user_management_db;User Id=admin;Password=admin123;TrustServerCertificate=True" \
+            ${{ env.REGISTRY }}:api-${{ env.TAG_VERSION }}
+
+          # Start Login Portal App
+          docker run -d --name login-portal-app -p 8081:8080 \
+            --network login-portal-networks \
+          -e ASPNETCORE_ENVIRONMENT=Development \
+          -e API_URL="http://loginportal:8080" \
+          -e ConnectionStrings__DefaultConnection="Server=sqlserver,1433;Database=user_management_db;User Id=admin;Password=admin123;TrustServerCertificate=True" \
+          ${{ env.REGISTRY }}:app-${{ env.TAG_VERSION }}
           '
+
 
   deploy_stage:
     needs: [tagify, build_and_push]
@@ -169,11 +203,47 @@ jobs:
 
       - name: Deploy to Stage Server
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.EC2_STAGE_IP }} '
-            sudo docker pull ${{ secrets.AWS_ECR_REGISTRY }}/loginportal_api:${{ env.TAG_VERSION }}
-            sudo docker-compose down
-            sudo docker-compose up -d
+          ssh -v -o StrictHostKeyChecking=no -i KeyPair.pem ec2-user@${{ secrets.EC2_STAGE_IP }} '
+            aws ecr get-login-password --region ${{ secrets.AWS_ECR_REGION }} | docker login --username AWS --password-stdin ${{ env.REGISTRY }}
+            docker pull ${{env.REGISTRY}}:app-${{env.TAG_VERSION}}
+            docker pull ${{env.REGISTRY}}:api-${{env.TAG_VERSION}}
+            echo "REGISTRY=${{env.REGISTRY}}"
+            echo "TAG_VERSION=${{env.TAG_VERSION}}"     
+
+          # Create the network if it does not exist
+          docker network inspect login-portal-networks >/dev/null 2>&1 || docker network create login-portal-networks
+
+
+          # Stop and remove existing containers if they exist
+          docker stop login-portal-api || true
+          docker rm login-portal-api || true
+          docker stop login-portal-app || true
+          docker rm login-portal-app || true
+          docker stop sqlserver-container || true
+          docker rm sqlserver-container || true
+
+          # Start SQL Server
+          docker run -d --name sqlserver-container -p 1433:1433 \
+            -e ACCEPT_EULA=Y -e SA_PASSWORD=admin123 \
+            --network login-portal-networks \
+            mcr.microsoft.com/mssql/server:2019-latest
+
+          # Start Login Portal API
+          docker run -d --name login-portal-api -p 8080:8080 \
+            --network login-portal-networks \
+            -e ASPNETCORE_ENVIRONMENT=Development \
+            -e ConnectionStrings__DefaultConnection="Server=sqlserver,1433;Database=user_management_db;User Id=admin;Password=admin123;TrustServerCertificate=True" \
+            ${{ env.REGISTRY }}:api-${{ env.TAG_VERSION }}
+
+          # Start Login Portal App
+          docker run -d --name login-portal-app -p 8081:8080 \
+            --network login-portal-networks \
+          -e ASPNETCORE_ENVIRONMENT=Development \
+          -e API_URL="http://loginportal:8080" \
+          -e ConnectionStrings__DefaultConnection="Server=sqlserver,1433;Database=user_management_db;User Id=admin;Password=admin123;TrustServerCertificate=True" \
+          ${{ env.REGISTRY }}:app-${{ env.TAG_VERSION }}
           '
+
 
   deploy_prod:
     needs: [tagify, build_and_push]
@@ -190,8 +260,44 @@ jobs:
 
       - name: Deploy to Production Server
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.EC2_PROD_IP }} '
-            sudo docker pull ${{ env.REGISTRY }}/loginportal_api:latest
-            sudo docker-compose down
-            sudo docker-compose up -d
+          ssh -v -o StrictHostKeyChecking=no -i KeyPair.pem ec2-user@${{ secrets.EC2_PROD_IP }} '
+            aws ecr get-login-password --region ${{ secrets.AWS_ECR_REGION }} | docker login --username AWS --password-stdin ${{ env.REGISTRY }}
+            docker pull ${{env.REGISTRY}}:app-${{env.TAG_VERSION}}
+            docker pull ${{env.REGISTRY}}:api-${{env.TAG_VERSION}}
+            echo "REGISTRY=${{env.REGISTRY}}"
+            echo "TAG_VERSION=${{env.TAG_VERSION}}"     
+
+          # Create the network if it does not exist
+          docker network inspect login-portal-networks >/dev/null 2>&1 || docker network create login-portal-networks
+
+
+          # Stop and remove existing containers if they exist
+          docker stop login-portal-api || true
+          docker rm login-portal-api || true
+          docker stop login-portal-app || true
+          docker rm login-portal-app || true
+          docker stop sqlserver-container || true
+          docker rm sqlserver-container || true
+
+          # Start SQL Server
+          docker run -d --name sqlserver-container -p 1433:1433 \
+            -e ACCEPT_EULA=Y -e SA_PASSWORD=admin123 \
+            --network login-portal-networks \
+            mcr.microsoft.com/mssql/server:2019-latest
+
+          # Start Login Portal API
+          docker run -d --name login-portal-api -p 8080:8080 \
+            --network login-portal-networks \
+            -e ASPNETCORE_ENVIRONMENT=Development \
+            -e ConnectionStrings__DefaultConnection="Server=sqlserver,1433;Database=user_management_db;User Id=admin;Password=admin123;TrustServerCertificate=True" \
+            ${{ env.REGISTRY }}:api-${{ env.TAG_VERSION }}
+
+          # Start Login Portal App
+          docker run -d --name login-portal-app -p 8081:8080 \
+            --network login-portal-networks \
+          -e ASPNETCORE_ENVIRONMENT=Development \
+          -e API_URL="http://loginportal:8080" \
+          -e ConnectionStrings__DefaultConnection="Server=sqlserver,1433;Database=user_management_db;User Id=admin;Password=admin123;TrustServerCertificate=True" \
+          ${{ secrets.AWS_ECR_REGISTRY }}:app-${{ env.TAG_VERSION }}
           '
+
