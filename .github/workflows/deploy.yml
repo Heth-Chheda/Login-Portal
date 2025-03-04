@@ -95,7 +95,7 @@ jobs:
             docker pull ${{secrets.AWS_ECR_REGISTRY}}:app-${{env.TAG_VERSION}}
             docker pull ${{secrets.AWS_ECR_REGISTRY}}:api-${{env.TAG_VERSION}}
             echo "REGISTRY=${{secrets.AWS_ECR_REGISTRY}}"
-            echo "TAG_VERSION=${TAG_VERSION}"
+            echo "TAG_VERSION=${{env.TAG_VERSION}}"
             docker-compose down
             docker-compose up -d
           '
