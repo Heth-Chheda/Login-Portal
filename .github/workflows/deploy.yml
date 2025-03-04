@@ -129,6 +129,8 @@ jobs:
           -e API_URL="http://loginportal:8080" \
           -e ConnectionStrings__DefaultConnection="Server=sqlserver,1433;Database=user_management_db;User Id=admin;Password=admin123;TrustServerCertificate=True" \
           ${{ env.REGISTRY }}:app-${{ env.TAG_VERSION }}
+
+          docker ps -a
           '
 
   deploy_qa:
