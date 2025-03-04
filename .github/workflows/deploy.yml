@@ -22,28 +22,22 @@ on:
           - prod
 
 jobs:
+
   tagify:
     name: Get Tag
+    if: ${{ contains(github.ref, 'refs/tags/') }}
     runs-on: ubuntu-latest
     outputs:
-      the_tag: ${{ steps.deploy_tag.outputs.TAG_NAME }}
+      the_tag: ${{ steps.latest_tag.outputs.TAG_NAME }}
+      version_number: ${{ steps.version.outputs.VERSION_NUMBER }}
     steps:
-      - name: Get Deploy Tag
-        if: ${{ github.event_name == 'push' }}
+      - name: Get Tag
+        id: latest_tag
         run: |
-          full_tag=${GITHUB_REF#refs/*/}
-          deploy_tag=${full_tag: 0:-7}
-          echo "VERSION=${deploy_tag}" >> "$GITHUB_ENV" 
+          echo GHR $GITHUB_REF
+          echo GHR_eval ${GITHUB_REF#refs/*/}
+          echo "TAG_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
 
-      - name: Manual Input
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        run: |
-          echo "VERSION=${{ github.event.inputs.deploy_version }}-${{ github.event.inputs.deploy_environment }}" >> "$GITHUB_ENV" 
-
-      - name: Output VAR
-        id: deploy_tag
-        run: |
-          echo "TAG_NAME=${{ env.VERSION }}" >> $GITHUB_OUTPUT
 
   build_and_push:
     needs: [tagify]
