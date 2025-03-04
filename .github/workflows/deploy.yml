@@ -95,30 +95,7 @@ jobs:
             docker pull ${{secrets.AWS_ECR_REGISTRY}}:app-${{env.TAG_VERSION}}
             docker pull ${{secrets.AWS_ECR_REGISTRY}}:api-${{env.TAG_VERSION}}
             echo "REGISTRY=${{secrets.AWS_ECR_REGISTRY}}"
-            echo "TAG_VERSION=${{env.TAG_VERSION}}"
-
-            echo "Current Working Directory:"
-            pwd
-
-            echo "Listing files and directories:"
-            ls -lah
-
-            echo "Checking in home directory..."
-            find ~ -name "docker-compose.yml"
-
-            if [ -f ~/docker-compose.yml ]; then
-              cd ~
-            elif [ -f ~/login-portal/docker-compose.yml ]; then
-              cd ~/login-portal
-            else
-              echo "docker-compose.yml not found. Exiting."
-              exit 1
-            fi
-
-            echo "After changing directory:"
-            pwd
-            ls -lah
-            
+            echo "TAG_VERSION=${{env.TAG_VERSION}}"            
 
           # Stop and remove existing containers if they exist
           docker stop login-portal-api || true
