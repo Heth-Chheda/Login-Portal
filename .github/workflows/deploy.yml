@@ -95,7 +95,11 @@ jobs:
             docker pull ${{secrets.AWS_ECR_REGISTRY}}:app-${{env.TAG_VERSION}}
             docker pull ${{secrets.AWS_ECR_REGISTRY}}:api-${{env.TAG_VERSION}}
             echo "REGISTRY=${{secrets.AWS_ECR_REGISTRY}}"
-            echo "TAG_VERSION=${{env.TAG_VERSION}}"            
+            echo "TAG_VERSION=${{env.TAG_VERSION}}"     
+
+          # Create the network if it does not exist
+          docker network inspect login-portal-networks >/dev/null 2>&1 || docker network create login-portal-networks
+
 
           # Stop and remove existing containers if they exist
           docker stop login-portal-api || true
@@ -119,7 +123,7 @@ jobs:
             ${{ secrets.AWS_ECR_REGISTRY }}:api-${{ env.TAG_VERSION }}
 
           # Start Login Portal App
-          docker run -d --name login-portal-app -p 8080:8080 \
+          docker run -d --name login-portal-app -p 8081:8080 \
             --network login-portal-networks \
           -e ASPNETCORE_ENVIRONMENT=Development \
           -e API_URL="http://loginportal:8080" \
