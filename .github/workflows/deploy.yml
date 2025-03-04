@@ -97,9 +97,27 @@ jobs:
             echo "REGISTRY=${{secrets.AWS_ECR_REGISTRY}}"
             echo "TAG_VERSION=${{env.TAG_VERSION}}"
 
-            # Debug step to locate docker-compose.yml
-            echo "Searching for docker-compose.yml..."
-            find / -name "docker-compose.yml" 2>/dev/null
+            echo "Current Working Directory:"
+            pwd
+
+            echo "Listing files and directories:"
+            ls -lah
+
+            echo "Checking in home directory..."
+            find ~ -name "docker-compose.yml"
+
+            if [ -f ~/docker-compose.yml ]; then
+              cd ~
+            elif [ -f ~/login-portal/docker-compose.yml ]; then
+              cd ~/login-portal
+            else
+              echo "docker-compose.yml not found. Exiting."
+              exit 1
+            fi
+
+            echo "After changing directory:"
+            pwd
+            ls -lah
             
             docker-compose down
             docker-compose up -d
