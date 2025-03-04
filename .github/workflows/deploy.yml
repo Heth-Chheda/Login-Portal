@@ -73,7 +73,7 @@ jobs:
           docker-compose push
 
   deploy_dev:
-    needs: [build_and_push]
+    needs: [tagify, build_and_push]
     runs-on: ubuntu-latest
     if: ${{ endsWith(needs.tagify.outputs.the_tag, 'dev-deploy') }}
     env:
@@ -98,7 +98,7 @@ jobs:
           '
 
   deploy_qa:
-    needs: [build_and_push]
+    needs: [tagify, build_and_push]
     runs-on: ubuntu-latest
     if: ${{ endsWith(needs.tagify.outputs.the_tag, 'qa-deploy') }}
     env:
@@ -121,7 +121,7 @@ jobs:
           '
 
   deploy_stage:
-    needs: [build_and_push]
+    needs: [tagify, build_and_push]
     runs-on: ubuntu-latest
     if: ${{ endsWith(needs.tagify.outputs.the_tag, 'stage-deploy') }}
     env:
@@ -142,7 +142,7 @@ jobs:
           '
 
   deploy_prod:
-    needs: [build_and_push]
+    needs: [tagify, build_and_push]
     runs-on: ubuntu-latest
     if: ${{ endsWith(needs.tagify.outputs.the_tag, 'prod-deploy') }}
     env:
