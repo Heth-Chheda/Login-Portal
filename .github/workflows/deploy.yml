@@ -119,8 +119,35 @@ jobs:
             pwd
             ls -lah
             
-            docker-compose down
-            docker-compose up -d
+
+          # Stop and remove existing containers if they exist
+          docker stop login-portal-api || true
+          docker rm login-portal-api || true
+          docker stop login-portal-app || true
+          docker rm login-portal-app || true
+          docker stop sqlserver-container || true
+          docker rm sqlserver-container || true
+
+          # Start SQL Server
+          docker run -d --name sqlserver-container -p 1433:1433 \
+            -e ACCEPT_EULA=Y -e SA_PASSWORD=admin123 \
+            --network login-portal-networks \
+            mcr.microsoft.com/mssql/server:2019-latest
+
+          # Start Login Portal API
+          docker run -d --name login-portal-api -p 8080:8080 \
+            --network login-portal-networks \
+            -e ASPNETCORE_ENVIRONMENT=Development \
+            -e ConnectionStrings__DefaultConnection="Server=sqlserver,1433;Database=user_management_db;User Id=admin;Password=admin123;TrustServerCertificate=True" \
+            ${{ secrets.AWS_ECR_REGISTRY }}:api-${{ env.TAG_VERSION }}
+
+          # Start Login Portal App
+          docker run -d --name login-portal-app -p 8080:8080 \
+            --network login-portal-networks \
+          -e ASPNETCORE_ENVIRONMENT=Development \
+          -e API_URL="http://loginportal:8080" \
+          -e ConnectionStrings__DefaultConnection="Server=sqlserver,1433;Database=user_management_db;User Id=admin;Password=admin123;TrustServerCertificate=True" \
+          ${{ secrets.AWS_ECR_REGISTRY }}:app-${{ env.TAG_VERSION }}
           '
 
   deploy_qa:
