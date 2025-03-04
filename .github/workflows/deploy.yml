@@ -96,6 +96,11 @@ jobs:
             docker pull ${{secrets.AWS_ECR_REGISTRY}}:api-${{env.TAG_VERSION}}
             echo "REGISTRY=${{secrets.AWS_ECR_REGISTRY}}"
             echo "TAG_VERSION=${{env.TAG_VERSION}}"
+
+            # Debug step to locate docker-compose.yml
+            echo "Searching for docker-compose.yml..."
+            find / -name "docker-compose.yml" 2>/dev/null
+            
             docker-compose down
             docker-compose up -d
           '
